@@ -1,0 +1,29 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "../notebooks/render-demo.ipynb"
+
+website:
+  title: "Nathan's Research"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/nrenzoni
+      - icon: linkedin
+        href: https://www.linkedin.com/in/nathan-renzoni
+        
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    
+toc: true
+toc-location: "left"
+toc-title: "Contents"
+
+execute:
+  freeze: true
+
+

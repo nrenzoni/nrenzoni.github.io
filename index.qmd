@@ -1,0 +1,17 @@
+---
+title: "Nathan's Research Notebooks"
+listing:
+  contents:
+    - "../notebooks/render-demo.ipynb"
+  sort: "date desc"
+  type: table
+  categories: false
+  fields: [date, title, categories]
+  sort-ui: false
+  filter-ui: false
+  date-format: 'medium'
+page-layout: full
+title-block-banner: true
+---
+
+
