@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "../notebooks/render-demo.html",
+    "href": "../notebooks/render-demo.html",
+    "title": "Render Demo",
+    "section": "",
+    "text": "Render Demo\n\n\nimport plotly.io as pio\n\n\npio.renderers.default = 'plotly_mimetype+notebook_connected'\n\n\nprint(\"hello world - 2!\")\n\nhello world - 2!\n\n\n\nimport plotly.express as px\n\ndf = px.data.iris()\nfig = px.scatter_matrix(df, dimensions=[\"sepal_width\", \"sepal_length\", \"petal_width\", \"petal_length\"], color=\"species\")\nfig.layout.margin.t = 10\nfig"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Hi! On this website I will be uploading renderings of my Jupyter notebooks - currently, my focus lies on researching financial market trading strategies. I’m interested in the intersection of statistical analysis (including but not limited to ML techniques) of large data sets."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Nathan’s Research Notebooks",
+    "section": "",
+    "text": "Date\n\n\nTitle\n\n\nCategories\n\n\n\n\n\n\nMar 11, 2024\n\n\nRender Demo\n\n\ntest, other\n\n\n\n\n\nNo matching items"
+  }
+]
