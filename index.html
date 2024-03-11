@@ -78,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      valueNames: ['listing-title','listing-date','listing-date-modified','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
       searchColumns: ["listing-date","listing-title","listing-author"],
     };
@@ -209,10 +209,13 @@ window.Quarto = {
 <thead>
 <tr>
 <th>
+Title
+</th>
+<th>
 Date
 </th>
 <th>
-Title
+Modified
 </th>
 <th>
 Categories
@@ -220,12 +223,15 @@ Categories
 </tr>
 </thead>
 <tbody class="list">
-<tr data-index="0" data-categories="test,other" data-listing-date-sort="1710129600000" data-listing-file-modified-sort="1710171079827" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1" data-listing-title-sort="Render Demo" data-listing-filename-sort="render-demo.ipynb">
+<tr data-index="0" data-categories="test,other" data-listing-date-sort="1710129600000" data-listing-file-modified-sort="1710174664268" data-listing-date-modified-sort="1710174664000" data-listing-reading-time-sort="1" data-listing-word-count-sort="1" data-listing-title-sort="Render Demo" data-listing-filename-sort="render-demo.ipynb">
+<td>
+<a href="./notebooks/render-demo.html" class="title listing-title">Render Demo</a>
+</td>
 <td>
 <span class="listing-date">Mar 11, 2024</span>
 </td>
 <td>
-<a href="./notebooks/render-demo.html" class="title listing-title">Render Demo</a>
+<span class="listing-date-modified">Mar 11, 2024</span>
 </td>
 <td>
 <span class="listing-categories">test, other</span>
