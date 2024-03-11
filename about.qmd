@@ -10,7 +10,7 @@ about:
     - icon: github
       text: Github
       href: ttps://github.com/nrenzoni
-
+date-modified: ""
 ---
 
 Hi! On this website I will be uploading renderings of my Jupyter notebooks - currently, my focus lies on researching financial market trading strategies. I'm interested in the intersection of statistical analysis (including but not limited to ML techniques) of large data sets.
