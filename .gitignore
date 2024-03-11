@@ -1,9 +1,0 @@
-# Ignore everything in repository root 
-/*
-
-# Files to not ignore
-!/.gitignore
-!/README.md
-
-# Folder to not ignore
-!/_site/
