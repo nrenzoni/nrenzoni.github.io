@@ -68,6 +68,9 @@ function update_github_pages() {
 	git --work-tree=_site commit -m "update site: $1"
 	git --work-tree=_site push
 	
+	
+	# clean residual files remaining
+	git reset --hard
 	# restore to main branch
 	git checkout main -q
 }
