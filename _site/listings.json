@@ -1,0 +1,9 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/notebooks/quarto_test_proj/test_file_1.html",
+      "/notebooks/render-demo.html"
+    ]
+  }
+]
