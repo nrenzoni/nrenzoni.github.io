@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/notebooks/pr_graph/eda_04_intraday_news_execution.html",
       "/notebooks/render-demo.html"
     ]
   }
