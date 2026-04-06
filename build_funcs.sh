@@ -1,5 +1,7 @@
-function activate_env() {
-	. /home/trade/.virtualenvs/trading-research/bin/activate
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+function uv_run_project() {
+	UV_PROJECT_ENVIRONMENT="$PROJECT_ROOT/.venv" uv run --project "$PROJECT_ROOT" --extra quarto "$@"
 }
 
 function require_clean_work_tree() {
@@ -38,17 +40,13 @@ function require_main_branch_clean() {
 
 # builds notebooks
 function execute_notebooks() {
-	activate_env
-	jupyter nbconvert --inplace --execute "$@"
-	deactivate
+	uv_run_project jupyter nbconvert --inplace --execute "$@"
 }
 
-# quarto needs py env with nbconvert installed
+# quarto CLI runs against the project-local uv environment
 function quarto_render() {
 	rm -r _site || true
-	activate_env
-	quarto render
-	deactivate
+	uv_run_project quarto render
 }
 
 # fix relative html links due to quarto
@@ -74,4 +72,3 @@ function update_github_pages() {
 	# restore to main branch
 	git checkout main -q
 }
-
