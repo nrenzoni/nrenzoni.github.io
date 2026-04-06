@@ -3,6 +3,7 @@ project:
   render:
     - "*.qmd"
     - "../notebooks/render-demo.ipynb"
+    - "../notebooks/pr_graph/eda_04_intraday_news_execution.ipynb"
 
 website:
   title: "Nathan's Research"
@@ -27,5 +28,4 @@ execute:
   freeze: true
 
 date-modified: 'last-modified'
-
 

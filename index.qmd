@@ -3,6 +3,7 @@ title: "Nathan's Research Notebooks"
 listing:
   contents:
     - "../notebooks/render-demo.ipynb"
+    - "../notebooks/pr_graph/eda_04_intraday_news_execution.ipynb"
   sort: "date desc"
   type: table
   categories: false
@@ -14,5 +15,4 @@ page-layout: full
 title-block-banner: true
 date-modified: ""
 ---
-
 
