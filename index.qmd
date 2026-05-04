@@ -2,7 +2,7 @@
 title: "Nathan's Research Notebooks"
 listing:
   contents:
-    - "../notebooks/render-demo.ipynb"
+    - "../notebooks/target_engineering/eda_01_target_engineering.ipynb"
     - "../notebooks/pr_graph/eda_04_intraday_news_execution.ipynb"
   sort: "date desc"
   type: table
