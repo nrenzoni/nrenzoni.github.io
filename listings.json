@@ -2,8 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/notebooks/pr_graph/eda_04_intraday_news_execution.html",
-      "/notebooks/render-demo.html"
+      "/notebooks/target_engineering/eda_01_target_engineering.html",
+      "/notebooks/pr_graph/eda_04_intraday_news_execution.html"
     ]
   }
 ]
