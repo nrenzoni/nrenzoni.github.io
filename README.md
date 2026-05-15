@@ -35,3 +35,14 @@ validate_sources
 render_site
 validate_site
 ```
+
+OpenCode commands are available for common publishing workflows:
+
+```text
+/add-notebook
+/publish-site
+```
+
+`/add-notebook` prompts for a source notebook path, validates it, infers the website destination, updates the render pipeline, renders the site, and then asks whether to commit and push. It commits only `build_funcs.sh`, `_quarto.yml`, and `docs/` when confirmed.
+
+`/publish-site` refreshes the configured notebooks from their source projects, renders `docs/`, and asks whether to commit and push only if the rendered site changed. It commits only `docs/` when confirmed.

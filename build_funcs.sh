@@ -145,6 +145,17 @@ function validate_site() {
 	done
 }
 
+# Return success when docs/ has staged or unstaged changes.
+function site_has_changes() {
+	if [ -n "$(git status --porcelain -- docs)" ]
+	then
+		return 0
+	fi
+
+	echo "site unchanged; nothing to publish."
+	return 1
+}
+
 # Commit and push only generated docs/ changes.
 function publish_site() {
 	local message="${1:-}"
