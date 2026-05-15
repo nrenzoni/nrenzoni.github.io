@@ -1,0 +1,2835 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Nathan’s Research - SNF Model Ablation And ML Value</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Nathan’s Research</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../trading-research.html"> 
+<span class="menu-text">Trading Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../payroll-anomaly-ranking/index.html"> 
+<span class="menu-text">Payroll Anomaly Ranking</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/nrenzoni"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/nathan-renzoni"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#snf-model-ablation-and-ml-value" id="toc-snf-model-ablation-and-ml-value" class="nav-link active" data-scroll-target="#snf-model-ablation-and-ml-value">SNF Model Ablation And ML Value</a>
+  <ul class="collapse">
+  <li><a href="#evaluation-design" id="toc-evaluation-design" class="nav-link" data-scroll-target="#evaluation-design">Evaluation Design</a></li>
+  <li><a href="#method-complexity-ladder" id="toc-method-complexity-ladder" class="nav-link" data-scroll-target="#method-complexity-ladder">Method-Complexity Ladder</a></li>
+  <li><a href="#component-contribution-heatmap" id="toc-component-contribution-heatmap" class="nav-link" data-scroll-target="#component-contribution-heatmap">Component Contribution Heatmap</a></li>
+  <li><a href="#manual-threshold-error-modes" id="toc-manual-threshold-error-modes" class="nav-link" data-scroll-target="#manual-threshold-error-modes">Manual Threshold Error Modes</a></li>
+  <li><a href="#temporal-uncertainty-and-calibration-context" id="toc-temporal-uncertainty-and-calibration-context" class="nav-link" data-scroll-target="#temporal-uncertainty-and-calibration-context">Temporal, Uncertainty, And Calibration Context</a></li>
+  <li><a href="#what-this-proves" id="toc-what-this-proves" class="nav-link" data-scroll-target="#what-this-proves">What This Proves</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">SNF Model Ablation And ML Value</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">May 14, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="snf-model-ablation-and-ml-value" class="level1">
+<h1>SNF Model Ablation And ML Value</h1>
+<p><strong>Executive takeaway:</strong> The business notebook shows that automated ranking improves SNF payroll approval workflow. This notebook tests whether the modeling stack earns its complexity by comparing manual thresholds, deterministic rules, robust statistics, unsupervised ML, and the hybrid ranking under approval-budget, dollar-capture, temporal, uncertainty, and robustness views.</p>
+<p>Synthetic labels and injected anomaly dollars are used here only for evaluation. They are not scoring features and they should not appear in administrator-facing queues.</p>
+<div id="b950a877" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> common.execution <span class="im">import</span> notebook_fast_mode</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> common.plots <span class="im">import</span> (</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    LetsPlot,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    aes,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    geom_bar,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    geom_line,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    geom_point,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    geom_tile,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    ggplot,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    labs,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    rotated_x_labels,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    theme_minimal,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> payroll_anomaly_ranking.columns <span class="im">import</span> (</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    AggregateCol,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    MetricCol,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    PayrollCol,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    ReviewCol,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    ScoreCol,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> payroll_anomaly_ranking.config <span class="im">import</span> PayrollConfig</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> payroll_anomaly_ranking.evaluation <span class="im">import</span> evaluate_scores</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> payroll_anomaly_ranking.pipeline <span class="im">import</span> PipelineIncludeConfig, run_pipeline</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> payroll_anomaly_ranking.scenarios <span class="im">import</span> diagnostic_scenario_presets</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>LetsPlot.setup_html()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+        <div id="DuBii1"></div>
+        <script type="text/javascript" data-lets-plot-script="library">
+            if(!window.letsPlotCallQueue) {
+                window.letsPlotCallQueue = [];
+            };
+            window.letsPlotCall = function(f) {
+                window.letsPlotCallQueue.push(f);
+            };
+            (function() {
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = "https://cdn.jsdelivr.net/gh/JetBrains/lets-plot@v4.9.0/js-package/distr/lets-plot.min.js";
+                script.onload = function() {
+                    window.letsPlotCall = function(f) {f();};
+                    window.letsPlotCallQueue.forEach(function(f) {f();});
+                    window.letsPlotCallQueue = [];
+                    
+                };
+                script.onerror = function(event) {
+                    window.letsPlotCall = function(f) {};    // noop
+                    window.letsPlotCallQueue = [];
+                    var div = document.createElement("div");
+                    div.style.color = 'darkred';
+                    div.textContent = 'Error loading Lets-Plot JS';
+                    document.getElementById("DuBii1").appendChild(div);
+                };
+                var e = document.getElementById("DuBii1");
+                e.appendChild(script);
+            })()
+        </script>
+        
+</div>
+</div>
+<div id="f6681a12" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> PayrollConfig(employee_count<span class="op">=</span><span class="dv">200</span>, pay_periods<span class="op">=</span><span class="dv">14</span>, review_budgets<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>FAST_CONFIG <span class="op">=</span> PayrollConfig(employee_count<span class="op">=</span><span class="dv">90</span>, pay_periods<span class="op">=</span><span class="dv">10</span>, review_budgets<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">25</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>NOTEBOOK_FAST <span class="op">=</span> notebook_fast_mode()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>active_config <span class="op">=</span> FAST_CONFIG <span class="cf">if</span> NOTEBOOK_FAST <span class="cf">else</span> config</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>active_include <span class="op">=</span> (</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    PipelineIncludeConfig(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        validation<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        aggregations<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        evaluation<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        backtest<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        rolling_origin<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        review_queues<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        leakage_checks<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> NOTEBOOK_FAST</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> PipelineIncludeConfig.<span class="bu">all</span>()</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>scenario <span class="op">=</span> diagnostic_scenario_presets((<span class="st">"premium-mismatch"</span>,))[<span class="st">"premium-mismatch"</span>]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> run_pipeline(active_config, scenario<span class="op">=</span>scenario, include<span class="op">=</span>active_include)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>SCORE_METHODS <span class="op">=</span> [</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"rule score"</span>, ScoreCol.RULE_SCORE, <span class="st">"deterministic rules"</span>),</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"robust statistical score"</span>, ScoreCol.STATISTICAL_SCORE, <span class="st">"robust statistics"</span>),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"schedule/timeclock score"</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        ScoreCol.SCHEDULE_TIMECLOCK_SCORE,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"operational context"</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">"premium eligibility score"</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        ScoreCol.PREMIUM_ELIGIBILITY_SCORE,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pay policy context"</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"ML score"</span>, ScoreCol.ML_SCORE, <span class="st">"unsupervised ML"</span>),</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"hybrid score"</span>, ScoreCol.FINAL_ANOMALY_SCORE, <span class="st">"hybrid ranking"</span>),</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>THRESHOLD_FLAGS <span class="op">=</span> [</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"gross pay threshold"</span>, ScoreCol.THRESHOLD_GROSS_PAY_FLAG),</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"total hours threshold"</span>, ScoreCol.THRESHOLD_TOTAL_HOURS_FLAG),</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"overtime threshold"</span>, ScoreCol.THRESHOLD_OVERTIME_HOURS_FLAG),</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"premium dollars threshold"</span>, ScoreCol.THRESHOLD_PREMIUM_DOLLARS_FLAG),</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"paid-vs-scheduled threshold"</span>, ScoreCol.THRESHOLD_PAID_VS_SCHEDULED_FLAG),</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _score_method_budget_metrics(scored: pl.DataFrame, budget: <span class="bu">int</span>) <span class="op">-&gt;</span> pl.DataFrame:</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    total_anomalies <span class="op">=</span> scored.<span class="bu">filter</span>(pl.col(PayrollCol.IS_ANOMALY) <span class="op">==</span> <span class="dv">1</span>).height</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    total_dollars <span class="op">=</span> <span class="bu">float</span>(</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        scored.<span class="bu">filter</span>(pl.col(PayrollCol.IS_ANOMALY) <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        .select(pl.<span class="bu">sum</span>(PayrollCol.ANOMALY_DOLLARS))</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>        .item()</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>        <span class="kw">or</span> <span class="fl">0.0</span>,</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> []</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> method, score_col, method_type <span class="kw">in</span> SCORE_METHODS:</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        top <span class="op">=</span> (</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>            scored.sort(</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>                [PayrollCol.PAY_PERIOD_INDEX, score_col],</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>                descending<span class="op">=</span>[<span class="va">False</span>, <span class="va">True</span>],</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>            .group_by(PayrollCol.PAY_PERIOD_INDEX)</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>            .head(budget)</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>        true_positives <span class="op">=</span> top.<span class="bu">filter</span>(pl.col(PayrollCol.IS_ANOMALY) <span class="op">==</span> <span class="dv">1</span>).height</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>        captured_dollars <span class="op">=</span> <span class="bu">float</span>(</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>            top.<span class="bu">filter</span>(pl.col(PayrollCol.IS_ANOMALY) <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>            .select(pl.<span class="bu">sum</span>(PayrollCol.ANOMALY_DOLLARS))</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>            .item()</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>            <span class="kw">or</span> <span class="fl">0.0</span>,</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        rows.append(</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>                <span class="st">"method"</span>: method,</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>                <span class="st">"method_type"</span>: method_type,</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>                MetricCol.K: <span class="bu">float</span>(budget),</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>                MetricCol.REVIEW_VOLUME: top.height,</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>                MetricCol.PRECISION_AT_K: true_positives <span class="op">/</span> <span class="bu">max</span>(top.height, <span class="dv">1</span>),</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>                MetricCol.RECALL_AT_K: true_positives <span class="op">/</span> <span class="bu">max</span>(total_anomalies, <span class="dv">1</span>),</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>                MetricCol.EXPOSURE_CAPTURED_AT_K: <span class="bu">float</span>(</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>                    top.select(pl.<span class="bu">sum</span>(ScoreCol.ESTIMATED_EXPOSURE)).item() <span class="kw">or</span> <span class="fl">0.0</span>,</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>                ),</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>                MetricCol.DOLLARS_CAPTURED_AT_K: captured_dollars,</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>                MetricCol.DOLLAR_CAPTURE_RATE: captured_dollars <span class="op">/</span> total_dollars</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> total_dollars</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span> <span class="fl">0.0</span>,</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>            },</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pl.DataFrame(rows)</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _method_ladder(scored: pl.DataFrame) <span class="op">-&gt;</span> pl.DataFrame:</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>    score_rows <span class="op">=</span> pl.concat(</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>        [</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>            _score_method_budget_metrics(scored, budget)</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> budget <span class="kw">in</span> active_config.review_budgets</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>        how<span class="op">=</span><span class="st">"diagonal"</span>,</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    threshold_rows <span class="op">=</span> evaluate_scores(scored, active_config).threshold_baseline_metrics</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>    threshold_rows <span class="op">=</span> threshold_rows.with_columns(</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>        pl.col(<span class="st">"baseline"</span>).<span class="bu">str</span>.replace(<span class="st">"_"</span>, <span class="st">" "</span>).alias(<span class="st">"method"</span>),</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>        pl.lit(<span class="st">"manual threshold"</span>).alias(<span class="st">"method_type"</span>),</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>        pl.lit(<span class="bu">float</span>(active_config.review_budgets[<span class="dv">0</span>])).alias(MetricCol.K),</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>        (</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>            pl.col(MetricCol.DOLLARS_CAPTURED_AT_K)</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>            <span class="op">/</span> <span class="bu">max</span>(</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>                <span class="bu">float</span>(</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>                    scored.<span class="bu">filter</span>(pl.col(PayrollCol.IS_ANOMALY) <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>                    .select(pl.<span class="bu">sum</span>(PayrollCol.ANOMALY_DOLLARS))</span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>                    .item()</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">or</span> <span class="fl">0.0</span>,</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>                ),</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>                <span class="fl">1.0</span>,</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>        ).alias(MetricCol.DOLLAR_CAPTURE_RATE),</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>    ).select(score_rows.columns)</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pl.concat([threshold_rows, score_rows], how<span class="op">=</span><span class="st">"diagonal"</span>)</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _threshold_error_summary(scored: pl.DataFrame) <span class="op">-&gt;</span> pl.DataFrame:</span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> []</span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>    total_anomalies <span class="op">=</span> scored.<span class="bu">filter</span>(pl.col(PayrollCol.IS_ANOMALY) <span class="op">==</span> <span class="dv">1</span>).height</span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> method, flag <span class="kw">in</span> THRESHOLD_FLAGS:</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>        reviewed <span class="op">=</span> scored.<span class="bu">filter</span>(pl.col(flag) <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>        false_negatives <span class="op">=</span> scored.<span class="bu">filter</span>(</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>            (pl.col(flag) <span class="op">==</span> <span class="dv">0</span>) <span class="op">&amp;</span> (pl.col(PayrollCol.IS_ANOMALY) <span class="op">==</span> <span class="dv">1</span>),</span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>        rows.append(</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>                <span class="st">"method"</span>: method,</span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>                MetricCol.REVIEW_VOLUME: reviewed.height,</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>                AggregateCol.TRUE_ANOMALIES: reviewed.<span class="bu">filter</span>(</span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>                    pl.col(PayrollCol.IS_ANOMALY) <span class="op">==</span> <span class="dv">1</span>,</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>                ).height,</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>                <span class="st">"false_positives"</span>: reviewed.<span class="bu">filter</span>(</span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>                    pl.col(PayrollCol.IS_ANOMALY) <span class="op">==</span> <span class="dv">0</span>,</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>                ).height,</span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>                <span class="st">"false_negatives"</span>: false_negatives.height,</span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>                <span class="st">"missed_anomaly_rate"</span>: false_negatives.height <span class="op">/</span> <span class="bu">max</span>(total_anomalies, <span class="dv">1</span>),</span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>                <span class="st">"missed_synthetic_dollars"</span>: <span class="bu">float</span>(</span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a>                    false_negatives.select(pl.<span class="bu">sum</span>(PayrollCol.ANOMALY_DOLLARS)).item()</span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">or</span> <span class="fl">0.0</span>,</span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a>                ),</span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>            },</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pl.DataFrame(rows)</span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _component_heatmap_data(scored: pl.DataFrame, <span class="op">*</span>, top_n: <span class="bu">int</span> <span class="op">=</span> <span class="dv">20</span>) <span class="op">-&gt;</span> pl.DataFrame:</span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>    latest_period <span class="op">=</span> scored.select(pl.<span class="bu">max</span>(PayrollCol.PAY_PERIOD_INDEX)).item()</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>    top <span class="op">=</span> (</span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>        scored.<span class="bu">filter</span>(pl.col(PayrollCol.PAY_PERIOD_INDEX) <span class="op">==</span> latest_period)</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>        .sort(ScoreCol.FINAL_ANOMALY_SCORE, descending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>        .with_row_index(<span class="st">"queue_row"</span>, offset<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>        .head(top_n)</span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>        .select(</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>            [</span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>                <span class="st">"queue_row"</span>,</span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>                ScoreCol.RULE_SCORE,</span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>                ScoreCol.STATISTICAL_SCORE,</span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>                ScoreCol.SCHEDULE_TIMECLOCK_SCORE,</span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a>                ScoreCol.PREMIUM_ELIGIBILITY_SCORE,</span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a>                ScoreCol.ML_SCORE,</span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>                ScoreCol.EXPOSURE_SCORE,</span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a>                ScoreCol.FINAL_ANOMALY_SCORE,</span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> top.unpivot(</span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a>        index<span class="op">=</span><span class="st">"queue_row"</span>,</span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a>        variable_name<span class="op">=</span><span class="st">"component"</span>,</span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a>        value_name<span class="op">=</span><span class="st">"score"</span>,</span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="evaluation-design" class="level2">
+<h2 class="anchored" data-anchor-id="evaluation-design">Evaluation Design</h2>
+<p>The ablation uses later-period synthetic labels only for evaluation. Scoring features remain leakage-safe and exclude injected labels, anomaly categories, and anomaly dollars. The operational metric is approval-budget ranking: what the system captures inside the number of records an administrator can realistically review each payroll cycle.</p>
+<div id="0cdecf54" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>results.leakage_checks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (3, 2)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">check</th>
+<th data-quarto-table-cell-role="th">passed</th>
+</tr>
+<tr class="odd">
+<th>str</th>
+<th>bool</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"model_features_exclude_labels"</td>
+<td>true</td>
+</tr>
+<tr class="even">
+<td>"analyst_queue_excludes_labels"</td>
+<td>true</td>
+</tr>
+<tr class="odd">
+<td>"scoring_features_exclude_anoma…</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="method-complexity-ladder" class="level2">
+<h2 class="anchored" data-anchor-id="method-complexity-ladder">Method-Complexity Ladder</h2>
+<p>The ladder below separates the value of each method family. Manual thresholds are the baseline workflow; rules add deterministic SNF approval logic; robust statistics add peer/history context; ML adds multivariate unusualness; hybrid ranking combines those signals with exposure so the queue is useful under constrained review capacity.</p>
+<div id="0a5c22b1" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>method_ladder <span class="op">=</span> _method_ladder(results.scored)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>method_ladder.sort(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    [MetricCol.K, MetricCol.DOLLAR_CAPTURE_RATE],</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    descending<span class="op">=</span>[<span class="va">False</span>, <span class="va">True</span>],</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (25, 9)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">method</th>
+<th data-quarto-table-cell-role="th">method_type</th>
+<th data-quarto-table-cell-role="th">k</th>
+<th data-quarto-table-cell-role="th">review_volume</th>
+<th data-quarto-table-cell-role="th">precision_at_k</th>
+<th data-quarto-table-cell-role="th">recall_at_k</th>
+<th data-quarto-table-cell-role="th">exposure_captured_at_k</th>
+<th data-quarto-table-cell-role="th">dollars_captured_at_k</th>
+<th data-quarto-table-cell-role="th">dollar_capture_rate</th>
+</tr>
+<tr class="odd">
+<th>str</th>
+<th>str</th>
+<th>f64</th>
+<th>i64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"rule score"</td>
+<td>"deterministic rules"</td>
+<td>10.0</td>
+<td>140</td>
+<td>0.892857</td>
+<td>0.961538</td>
+<td>19457.682525</td>
+<td>2630.74</td>
+<td>0.960531</td>
+</tr>
+<tr class="even">
+<td>"premium eligibility score"</td>
+<td>"pay policy context"</td>
+<td>10.0</td>
+<td>140</td>
+<td>0.835714</td>
+<td>0.9</td>
+<td>16415.8028</td>
+<td>2437.18</td>
+<td>0.889858</td>
+</tr>
+<tr class="odd">
+<td>"manual threshold_pack"</td>
+<td>"manual threshold"</td>
+<td>10.0</td>
+<td>1672</td>
+<td>0.046651</td>
+<td>0.6</td>
+<td>210852.845442</td>
+<td>1832.1</td>
+<td>0.668933</td>
+</tr>
+<tr class="even">
+<td>"facility payroll_variance_thre…</td>
+<td>"manual threshold"</td>
+<td>10.0</td>
+<td>2588</td>
+<td>0.016615</td>
+<td>0.330769</td>
+<td>318221.704375</td>
+<td>915.21</td>
+<td>0.33416</td>
+</tr>
+<tr class="odd">
+<td>"hybrid score"</td>
+<td>"hybrid ranking"</td>
+<td>10.0</td>
+<td>140</td>
+<td>0.1</td>
+<td>0.107692</td>
+<td>45905.20535</td>
+<td>344.58</td>
+<td>0.125812</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>"rule score"</td>
+<td>"deterministic rules"</td>
+<td>50.0</td>
+<td>700</td>
+<td>0.185714</td>
+<td>1.0</td>
+<td>79998.595028</td>
+<td>2738.84</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>"hybrid score"</td>
+<td>"hybrid ranking"</td>
+<td>50.0</td>
+<td>700</td>
+<td>0.175714</td>
+<td>0.946154</td>
+<td>134582.36125</td>
+<td>2610.24</td>
+<td>0.953046</td>
+</tr>
+<tr class="odd">
+<td>"ML score"</td>
+<td>"unsupervised ML"</td>
+<td>50.0</td>
+<td>700</td>
+<td>0.052857</td>
+<td>0.284615</td>
+<td>132068.855756</td>
+<td>853.37</td>
+<td>0.311581</td>
+</tr>
+<tr class="even">
+<td>"robust statistical score"</td>
+<td>"robust statistics"</td>
+<td>50.0</td>
+<td>700</td>
+<td>0.021429</td>
+<td>0.115385</td>
+<td>138951.437431</td>
+<td>368.24</td>
+<td>0.134451</td>
+</tr>
+<tr class="odd">
+<td>"schedule/timeclock score"</td>
+<td>"operational context"</td>
+<td>50.0</td>
+<td>700</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>54056.884232</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="e4405266" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>top_budget <span class="op">=</span> <span class="bu">float</span>(active_config.review_budgets[<span class="dv">0</span>])</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>budget_ladder <span class="op">=</span> method_ladder.<span class="bu">filter</span>(pl.col(MetricCol.K) <span class="op">==</span> top_budget).with_columns(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        pl.col(MetricCol.EXPOSURE_CAPTURED_AT_K)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="op">/</span> pl.max_horizontal(pl.col(MetricCol.REVIEW_VOLUME), pl.lit(<span class="dv">1</span>))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    ).alias(<span class="st">"exposure_per_review"</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    ggplot(budget_ladder, aes(<span class="st">"method"</span>, <span class="st">"exposure_per_review"</span>))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_bar(aes(fill<span class="op">=</span><span class="st">"method_type"</span>), stat<span class="op">=</span><span class="st">"identity"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> labs(</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="st">"Incremental method value at the first approval budget"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">"Method"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="st">"Estimated exposure per reviewed record"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        fill<span class="op">=</span><span class="st">"Method family"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> theme_minimal()</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> rotated_x_labels()</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+   <div id="mThibp"></div>
+   <script type="text/javascript" data-lets-plot-script="plot">
+   
+   (function() {
+   // ----------
+   
+   const forceImmediateRender = false;
+   const responsive = false;
+   
+   let sizing = {
+       width_mode: "MIN",
+       height_mode: "SCALED",
+       width: null, 
+       height: null 
+   };
+   
+   const preferredWidth = document.body.dataset.letsPlotPreferredWidth;
+   if (preferredWidth !== undefined) {
+       sizing = {
+           width_mode: 'FIXED',
+           height_mode: 'SCALED',
+           width: parseFloat(preferredWidth)
+       };
+   }
+   
+   const containerDiv = document.getElementById("mThibp");
+   let fig = null;
+   
+   function renderPlot() {
+       if (fig === null) {
+           const plotSpec = {
+"data":{
+"method":["manual threshold_pack","gross pay_threshold","total hours_threshold","overtime hours_threshold","premium dollars_threshold","paid vs_scheduled_threshold","facility payroll_variance_threshold","rule score","robust statistical score","schedule/timeclock score","premium eligibility score","ML score","hybrid score"],
+"method_type":["manual threshold","manual threshold","manual threshold","manual threshold","manual threshold","manual threshold","manual threshold","deterministic rules","robust statistics","operational context","pay policy context","unsupervised ML","hybrid ranking"],
+"exposure_per_review":[126.10816114967423,0.0,361.39731199999994,361.39731199999994,270.53000000000003,134.94220960912054,122.96047309698608,138.9834466071429,329.87687464285716,39.411460166129324,117.2557342857143,355.6882514285714,327.8943239285714]
+},
+"mapping":{
+"x":"method",
+"y":"exposure_per_review"
+},
+"data_meta":{
+"series_annotations":[{
+"type":"str",
+"column":"method"
+},{
+"type":"str",
+"column":"method_type"
+},{
+"type":"float",
+"column":"k"
+},{
+"type":"int",
+"column":"review_volume"
+},{
+"type":"float",
+"column":"precision_at_k"
+},{
+"type":"float",
+"column":"recall_at_k"
+},{
+"type":"float",
+"column":"exposure_captured_at_k"
+},{
+"type":"float",
+"column":"dollars_captured_at_k"
+},{
+"type":"float",
+"column":"dollar_capture_rate"
+},{
+"type":"float",
+"column":"exposure_per_review"
+}]
+},
+"ggtitle":{
+"text":"Incremental method value at the first approval budget"
+},
+"guides":{
+"x":{
+"title":"Method"
+},
+"y":{
+"title":"Estimated exposure per reviewed record"
+},
+"fill":{
+"title":"Method family"
+}
+},
+"theme":{
+"name":"minimal",
+"axis_text_x":{
+"angle":45.0,
+"hjust":1.0,
+"blank":false
+}
+},
+"kind":"plot",
+"scales":[],
+"layers":[{
+"geom":"bar",
+"stat":"identity",
+"mapping":{
+"fill":"method_type"
+},
+"data_meta":{
+},
+"data":{
+}
+}],
+"metainfo_list":[],
+"spec_id":"1"
+};
+           window.letsPlotCall(function() { fig = LetsPlot.buildPlotFromProcessedSpecs(plotSpec, containerDiv, sizing); });
+       } else {
+           fig.updateView({});
+       }
+   }
+   
+   const renderImmediately = 
+       forceImmediateRender || (
+           sizing.width_mode === 'FIXED' && 
+           (sizing.height_mode === 'FIXED' || sizing.height_mode === 'SCALED')
+       );
+   
+   if (renderImmediately) {
+       renderPlot();
+   }
+   
+   if (!renderImmediately || responsive) {
+       // Set up observer for initial sizing or continuous monitoring
+       var observer = new ResizeObserver(function(entries) {
+           for (let entry of entries) {
+               if (entry.contentBoxSize && 
+                   entry.contentBoxSize[0].inlineSize > 0) {
+                   if (!responsive && observer) {
+                       observer.disconnect();
+                       observer = null;
+                   }
+                   renderPlot();
+                   if (!responsive) {
+                       break;
+                   }
+               }
+           }
+       });
+       
+       observer.observe(containerDiv);
+   }
+   
+   // ----------
+   })();
+   
+   </script>
+</div>
+</div>
+<div id="769b6f13" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    ggplot(method_ladder, aes(MetricCol.K, MetricCol.DOLLAR_CAPTURE_RATE))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_line(aes(color<span class="op">=</span><span class="st">"method"</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_point(aes(color<span class="op">=</span><span class="st">"method"</span>), size<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> labs(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="st">"Dollar capture improves or degrades as review budget changes"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">"Review budget per pay period"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="st">"Synthetic dollar capture rate"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">"Method"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> theme_minimal()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+   <div id="XdcjlN"></div>
+   <script type="text/javascript" data-lets-plot-script="plot">
+   
+   (function() {
+   // ----------
+   
+   const forceImmediateRender = false;
+   const responsive = false;
+   
+   let sizing = {
+       width_mode: "MIN",
+       height_mode: "SCALED",
+       width: null, 
+       height: null 
+   };
+   
+   const preferredWidth = document.body.dataset.letsPlotPreferredWidth;
+   if (preferredWidth !== undefined) {
+       sizing = {
+           width_mode: 'FIXED',
+           height_mode: 'SCALED',
+           width: parseFloat(preferredWidth)
+       };
+   }
+   
+   const containerDiv = document.getElementById("XdcjlN");
+   let fig = null;
+   
+   function renderPlot() {
+       if (fig === null) {
+           const plotSpec = {
+"data":{
+"method":["manual threshold_pack","gross pay_threshold","total hours_threshold","overtime hours_threshold","premium dollars_threshold","paid vs_scheduled_threshold","facility payroll_variance_threshold","rule score","robust statistical score","schedule/timeclock score","premium eligibility score","ML score","hybrid score","rule score","robust statistical score","schedule/timeclock score","premium eligibility score","ML score","hybrid score","rule score","robust statistical score","schedule/timeclock score","premium eligibility score","ML score","hybrid score"],
+"k":[10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,25.0,25.0,25.0,25.0,25.0,25.0,50.0,50.0,50.0,50.0,50.0,50.0],
+"dollar_capture_rate":[0.6689328328781529,0.0,0.013315856347942927,0.013315856347942927,0.012866761110543152,0.0,0.3341597172525596,0.960530735639906,0.04911933519300142,0.0,0.8898584802325072,0.04911933519300142,0.12581238772619066,1.0000000000000002,0.08424369441077247,0.0,1.0,0.07318061661141213,0.32449869287727656,0.9999999999999999,0.13445108147975054,0.0,1.0,0.3115808152356473,0.9530458150165764]
+},
+"mapping":{
+"x":"k",
+"y":"dollar_capture_rate"
+},
+"data_meta":{
+"series_annotations":[{
+"type":"str",
+"column":"method"
+},{
+"type":"str",
+"column":"method_type"
+},{
+"type":"float",
+"column":"k"
+},{
+"type":"int",
+"column":"review_volume"
+},{
+"type":"float",
+"column":"precision_at_k"
+},{
+"type":"float",
+"column":"recall_at_k"
+},{
+"type":"float",
+"column":"exposure_captured_at_k"
+},{
+"type":"float",
+"column":"dollars_captured_at_k"
+},{
+"type":"float",
+"column":"dollar_capture_rate"
+}]
+},
+"ggtitle":{
+"text":"Dollar capture improves or degrades as review budget changes"
+},
+"guides":{
+"x":{
+"title":"Review budget per pay period"
+},
+"y":{
+"title":"Synthetic dollar capture rate"
+},
+"color":{
+"title":"Method"
+}
+},
+"theme":{
+"name":"minimal"
+},
+"kind":"plot",
+"scales":[],
+"layers":[{
+"geom":"line",
+"mapping":{
+"color":"method"
+},
+"data_meta":{
+},
+"data":{
+}
+},{
+"geom":"point",
+"mapping":{
+"color":"method"
+},
+"data_meta":{
+},
+"size":3.0,
+"data":{
+}
+}],
+"metainfo_list":[],
+"spec_id":"2"
+};
+           window.letsPlotCall(function() { fig = LetsPlot.buildPlotFromProcessedSpecs(plotSpec, containerDiv, sizing); });
+       } else {
+           fig.updateView({});
+       }
+   }
+   
+   const renderImmediately = 
+       forceImmediateRender || (
+           sizing.width_mode === 'FIXED' && 
+           (sizing.height_mode === 'FIXED' || sizing.height_mode === 'SCALED')
+       );
+   
+   if (renderImmediately) {
+       renderPlot();
+   }
+   
+   if (!renderImmediately || responsive) {
+       // Set up observer for initial sizing or continuous monitoring
+       var observer = new ResizeObserver(function(entries) {
+           for (let entry of entries) {
+               if (entry.contentBoxSize && 
+                   entry.contentBoxSize[0].inlineSize > 0) {
+                   if (!responsive && observer) {
+                       observer.disconnect();
+                       observer = null;
+                   }
+                   renderPlot();
+                   if (!responsive) {
+                       break;
+                   }
+               }
+           }
+       });
+       
+       observer.observe(containerDiv);
+   }
+   
+   // ----------
+   })();
+   
+   </script>
+</div>
+</div>
+</section>
+<section id="component-contribution-heatmap" class="level2">
+<h2 class="anchored" data-anchor-id="component-contribution-heatmap">Component Contribution Heatmap</h2>
+<p>The heatmap makes hybrid ranking explainable at the record level. Rows are the top latest-period queue records. Columns show the major component scores that contribute to the final approval exception score.</p>
+<div id="245a4d08" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>component_heatmap <span class="op">=</span> _component_heatmap_data(results.scored)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    ggplot(component_heatmap, aes(<span class="st">"component"</span>, <span class="st">"queue_row"</span>, fill<span class="op">=</span><span class="st">"score"</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_tile()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> labs(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="st">"Top queue records by score component"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">"Score component"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="st">"Latest-period queue row"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        fill<span class="op">=</span><span class="st">"Score"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> theme_minimal()</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> rotated_x_labels()</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+   <div id="xfvrv6"></div>
+   <script type="text/javascript" data-lets-plot-script="plot">
+   
+   (function() {
+   // ----------
+   
+   const forceImmediateRender = false;
+   const responsive = false;
+   
+   let sizing = {
+       width_mode: "MIN",
+       height_mode: "SCALED",
+       width: null, 
+       height: null 
+   };
+   
+   const preferredWidth = document.body.dataset.letsPlotPreferredWidth;
+   if (preferredWidth !== undefined) {
+       sizing = {
+           width_mode: 'FIXED',
+           height_mode: 'SCALED',
+           width: parseFloat(preferredWidth)
+       };
+   }
+   
+   const containerDiv = document.getElementById("xfvrv6");
+   let fig = null;
+   
+   function renderPlot() {
+       if (fig === null) {
+           const plotSpec = {
+"data":{
+"queue_row":[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0],
+"component":["rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","rule_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","statistical_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","schedule_timeclock_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","premium_eligibility_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","ml_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","exposure_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score","final_anomaly_score"],
+"score":[0.74,0.2,0.2,0.22,0.87,0.0,0.0,0.0,0.0,0.0,0.22,0.22,0.22,0.22,0.0,0.2,0.22,0.52,0.52,0.52,0.29084967320261434,1.0,1.0,0.8013398608606028,0.37874259211543415,1.0,1.0,1.0,1.0,1.0,0.4452718371553722,0.44589023447565057,0.5693215339233039,0.25766501963765365,1.0,0.6816542128317442,0.39564545220304037,0.13347075496006186,0.3473589281113114,0.10220203012442693,0.4500000000000002,0.04499999999999993,0.002500000000000391,1.0,0.08250000000000002,0.0,0.0,0.0,0.0,0.0,0.835,0.8875000000000002,0.9975,0.7200000000000002,0.0,0.27249999999999996,0.4525000000000001,0.07750000000000012,0.0,0.0,1.0,0.20888971758867483,0.18746503246288562,0.2142619061623826,1.0,0.39153548235086216,0.16222262807049584,0.16548608972384768,0.4522627027402494,0.519481522977959,0.4269578313253012,0.4346377123199312,0.0,0.8202035431586884,0.3002704739945905,0.33176582251175635,0.6121731238300528,1.0,1.0,1.0,0.6891855820427311,0.949021543124966,0.9716415981749381,0.8685192203604063,0.49401142727278924,0.9469756627945302,1.0,0.9499814439485094,0.9119518509474486,0.8723005779375059,0.7528444291199212,0.7330826707681855,0.807437826757727,0.7022714757050182,0.7950338181615539,0.8528598474186485,0.6449110695469166,0.41139804909195615,0.3921728672786609,0.4631454440990533,0.74,0.714533641227177,0.7410385521162679,0.4754916377467992,0.87,0.7069079770863093,0.7728175509085928,0.7445975772507957,0.6543778001597611,0.6155272664052389,0.39422870051635106,0.45906794237798326,0.42741831982692247,0.4273207004077716,0.5838691083226178,0.6053000560852496,0.4331641046003743,0.52,0.52,0.52,0.7609059718947926,0.7559022332101254,0.7549772793914185,0.750481627798179,0.7345723114621489,0.7149008977966578,0.6999929230207288,0.6876240990761202,0.6712436068826604,0.6621832619158203,0.6467960095949274,0.6331579912744485,0.6223930322979164,0.6150264923593874,0.6126474778065197,0.586627820218051,0.5829264527072942,0.553249779770816,0.5518245867050325,0.5314236449454588]
+},
+"mapping":{
+"x":"component",
+"y":"queue_row",
+"fill":"score"
+},
+"data_meta":{
+"series_annotations":[{
+"type":"int",
+"column":"queue_row"
+},{
+"type":"str",
+"column":"component"
+},{
+"type":"float",
+"column":"score"
+}]
+},
+"ggtitle":{
+"text":"Top queue records by score component"
+},
+"guides":{
+"x":{
+"title":"Score component"
+},
+"y":{
+"title":"Latest-period queue row"
+},
+"fill":{
+"title":"Score"
+}
+},
+"theme":{
+"name":"minimal",
+"axis_text_x":{
+"angle":45.0,
+"hjust":1.0,
+"blank":false
+}
+},
+"kind":"plot",
+"scales":[],
+"layers":[{
+"geom":"tile",
+"mapping":{
+},
+"data_meta":{
+},
+"data":{
+}
+}],
+"metainfo_list":[],
+"spec_id":"3"
+};
+           window.letsPlotCall(function() { fig = LetsPlot.buildPlotFromProcessedSpecs(plotSpec, containerDiv, sizing); });
+       } else {
+           fig.updateView({});
+       }
+   }
+   
+   const renderImmediately = 
+       forceImmediateRender || (
+           sizing.width_mode === 'FIXED' && 
+           (sizing.height_mode === 'FIXED' || sizing.height_mode === 'SCALED')
+       );
+   
+   if (renderImmediately) {
+       renderPlot();
+   }
+   
+   if (!renderImmediately || responsive) {
+       // Set up observer for initial sizing or continuous monitoring
+       var observer = new ResizeObserver(function(entries) {
+           for (let entry of entries) {
+               if (entry.contentBoxSize && 
+                   entry.contentBoxSize[0].inlineSize > 0) {
+                   if (!responsive && observer) {
+                       observer.disconnect();
+                       observer = null;
+                   }
+                   renderPlot();
+                   if (!responsive) {
+                       break;
+                   }
+               }
+           }
+       });
+       
+       observer.observe(containerDiv);
+   }
+   
+   // ----------
+   })();
+   
+   </script>
+</div>
+</div>
+</section>
+<section id="manual-threshold-error-modes" class="level2">
+<h2 class="anchored" data-anchor-id="manual-threshold-error-modes">Manual Threshold Error Modes</h2>
+<p>This section intentionally uses evaluation-only synthetic labels. It shows why threshold review is fragile: a broad threshold can create many false positives, while a narrow threshold can leave synthetic anomaly dollars outside the review queue.</p>
+<div id="b3619c96" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>threshold_errors <span class="op">=</span> _threshold_error_summary(results.scored)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>threshold_errors.sort(<span class="st">"missed_synthetic_dollars"</span>, descending<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 7)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">method</th>
+<th data-quarto-table-cell-role="th">review_volume</th>
+<th data-quarto-table-cell-role="th">true_anomalies</th>
+<th data-quarto-table-cell-role="th">false_positives</th>
+<th data-quarto-table-cell-role="th">false_negatives</th>
+<th data-quarto-table-cell-role="th">missed_anomaly_rate</th>
+<th data-quarto-table-cell-role="th">missed_synthetic_dollars</th>
+</tr>
+<tr class="odd">
+<th>str</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+<th>f64</th>
+<th>f64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"gross pay threshold"</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>130</td>
+<td>1.0</td>
+<td>2738.84</td>
+</tr>
+<tr class="even">
+<td>"paid-vs-scheduled threshold"</td>
+<td>307</td>
+<td>0</td>
+<td>307</td>
+<td>130</td>
+<td>1.0</td>
+<td>2738.84</td>
+</tr>
+<tr class="odd">
+<td>"premium dollars threshold"</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>129</td>
+<td>0.992308</td>
+<td>2703.6</td>
+</tr>
+<tr class="even">
+<td>"total hours threshold"</td>
+<td>25</td>
+<td>1</td>
+<td>24</td>
+<td>129</td>
+<td>0.992308</td>
+<td>2702.37</td>
+</tr>
+<tr class="odd">
+<td>"overtime threshold"</td>
+<td>25</td>
+<td>1</td>
+<td>24</td>
+<td>129</td>
+<td>0.992308</td>
+<td>2702.37</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="2e1fabde" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    ggplot(threshold_errors, aes(<span class="st">"method"</span>, <span class="st">"missed_synthetic_dollars"</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_bar(stat<span class="op">=</span><span class="st">"identity"</span>, fill<span class="op">=</span><span class="st">"#b45309"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> labs(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="st">"Evaluation-only synthetic dollars missed by manual thresholds"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">"Manual threshold"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="st">"Missed synthetic anomaly dollars"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> theme_minimal()</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> rotated_x_labels()</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+   <div id="aOndWu"></div>
+   <script type="text/javascript" data-lets-plot-script="plot">
+   
+   (function() {
+   // ----------
+   
+   const forceImmediateRender = false;
+   const responsive = false;
+   
+   let sizing = {
+       width_mode: "MIN",
+       height_mode: "SCALED",
+       width: null, 
+       height: null 
+   };
+   
+   const preferredWidth = document.body.dataset.letsPlotPreferredWidth;
+   if (preferredWidth !== undefined) {
+       sizing = {
+           width_mode: 'FIXED',
+           height_mode: 'SCALED',
+           width: parseFloat(preferredWidth)
+       };
+   }
+   
+   const containerDiv = document.getElementById("aOndWu");
+   let fig = null;
+   
+   function renderPlot() {
+       if (fig === null) {
+           const plotSpec = {
+"data":{
+"method":["gross pay threshold","total hours threshold","overtime threshold","premium dollars threshold","paid-vs-scheduled threshold"],
+"missed_synthetic_dollars":[2738.8399999999997,2702.3699999999994,2702.3699999999994,2703.5999999999995,2738.8399999999997]
+},
+"mapping":{
+"x":"method",
+"y":"missed_synthetic_dollars"
+},
+"data_meta":{
+"series_annotations":[{
+"type":"str",
+"column":"method"
+},{
+"type":"int",
+"column":"review_volume"
+},{
+"type":"int",
+"column":"true_anomalies"
+},{
+"type":"int",
+"column":"false_positives"
+},{
+"type":"int",
+"column":"false_negatives"
+},{
+"type":"float",
+"column":"missed_anomaly_rate"
+},{
+"type":"float",
+"column":"missed_synthetic_dollars"
+}]
+},
+"ggtitle":{
+"text":"Evaluation-only synthetic dollars missed by manual thresholds"
+},
+"guides":{
+"x":{
+"title":"Manual threshold"
+},
+"y":{
+"title":"Missed synthetic anomaly dollars"
+}
+},
+"theme":{
+"name":"minimal",
+"axis_text_x":{
+"angle":45.0,
+"hjust":1.0,
+"blank":false
+}
+},
+"kind":"plot",
+"scales":[],
+"layers":[{
+"geom":"bar",
+"stat":"identity",
+"mapping":{
+},
+"data_meta":{
+},
+"fill":"#b45309",
+"data":{
+}
+}],
+"metainfo_list":[],
+"spec_id":"4"
+};
+           window.letsPlotCall(function() { fig = LetsPlot.buildPlotFromProcessedSpecs(plotSpec, containerDiv, sizing); });
+       } else {
+           fig.updateView({});
+       }
+   }
+   
+   const renderImmediately = 
+       forceImmediateRender || (
+           sizing.width_mode === 'FIXED' && 
+           (sizing.height_mode === 'FIXED' || sizing.height_mode === 'SCALED')
+       );
+   
+   if (renderImmediately) {
+       renderPlot();
+   }
+   
+   if (!renderImmediately || responsive) {
+       // Set up observer for initial sizing or continuous monitoring
+       var observer = new ResizeObserver(function(entries) {
+           for (let entry of entries) {
+               if (entry.contentBoxSize && 
+                   entry.contentBoxSize[0].inlineSize > 0) {
+                   if (!responsive && observer) {
+                       observer.disconnect();
+                       observer = null;
+                   }
+                   renderPlot();
+                   if (!responsive) {
+                       break;
+                   }
+               }
+           }
+       });
+       
+       observer.observe(containerDiv);
+   }
+   
+   // ----------
+   })();
+   
+   </script>
+</div>
+</div>
+</section>
+<section id="temporal-uncertainty-and-calibration-context" class="level2">
+<h2 class="anchored" data-anchor-id="temporal-uncertainty-and-calibration-context">Temporal, Uncertainty, And Calibration Context</h2>
+<p>A stronger data-science proof does not stop at one aggregate table. The views below check whether selected thresholds transfer over time, whether uncertainty buckets carry useful signal, and whether expected-pay intervals behave plausibly on synthetic evaluation records.</p>
+<div id="75ea798d" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>results.model_comparison</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (6, 8)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">model</th>
+<th data-quarto-table-cell-role="th">k</th>
+<th data-quarto-table-cell-role="th">precision_at_k</th>
+<th data-quarto-table-cell-role="th">recall_at_k</th>
+<th data-quarto-table-cell-role="th">f1_at_k</th>
+<th data-quarto-table-cell-role="th">average_anomaly_rank</th>
+<th data-quarto-table-cell-role="th">mean_reciprocal_rank</th>
+<th data-quarto-table-cell-role="th">pr_auc</th>
+</tr>
+<tr class="odd">
+<th>str</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"rule_score"</td>
+<td>10.0</td>
+<td>0.892857</td>
+<td>0.961538</td>
+<td>0.925926</td>
+<td>5.307692</td>
+<td>0.306057</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>"statistical_score"</td>
+<td>10.0</td>
+<td>0.028571</td>
+<td>0.030769</td>
+<td>0.02963</td>
+<td>398.669231</td>
+<td>0.01279</td>
+<td>0.013481</td>
+</tr>
+<tr class="odd">
+<td>"schedule_timeclock_score"</td>
+<td>10.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>484.469231</td>
+<td>0.003116</td>
+<td>0.009075</td>
+</tr>
+<tr class="even">
+<td>"premium_eligibility_score"</td>
+<td>10.0</td>
+<td>0.835714</td>
+<td>0.9</td>
+<td>0.866667</td>
+<td>5.723077</td>
+<td>0.291564</td>
+<td>0.872483</td>
+</tr>
+<tr class="odd">
+<td>"ml_score"</td>
+<td>10.0</td>
+<td>0.028571</td>
+<td>0.030769</td>
+<td>0.02963</td>
+<td>60.953846</td>
+<td>0.048181</td>
+<td>0.084428</td>
+</tr>
+<tr class="even">
+<td>"hybrid_score"</td>
+<td>10.0</td>
+<td>0.1</td>
+<td>0.107692</td>
+<td>0.103704</td>
+<td>30.438462</td>
+<td>0.094971</td>
+<td>0.17436</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="83c02abe" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>results.rolling_origin_metrics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (9, 20)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">origin</th>
+<th data-quarto-table-cell-role="th">train_start_period</th>
+<th data-quarto-table-cell-role="th">train_end_period</th>
+<th data-quarto-table-cell-role="th">validation_period</th>
+<th data-quarto-table-cell-role="th">test_period</th>
+<th data-quarto-table-cell-role="th">selected_threshold</th>
+<th data-quarto-table-cell-role="th">validation_f1</th>
+<th data-quarto-table-cell-role="th">threshold_precision</th>
+<th data-quarto-table-cell-role="th">threshold_recall</th>
+<th data-quarto-table-cell-role="th">k</th>
+<th data-quarto-table-cell-role="th">review_volume</th>
+<th data-quarto-table-cell-role="th">native_review_burden</th>
+<th data-quarto-table-cell-role="th">precision_at_k</th>
+<th data-quarto-table-cell-role="th">recall_at_k</th>
+<th data-quarto-table-cell-role="th">f1_at_k</th>
+<th data-quarto-table-cell-role="th">exposure_captured_at_k</th>
+<th data-quarto-table-cell-role="th">exposure_per_review</th>
+<th data-quarto-table-cell-role="th">dollars_captured_at_k</th>
+<th data-quarto-table-cell-role="th">dollar_capture_rate</th>
+<th data-quarto-table-cell-role="th">test_score_mean</th>
+</tr>
+<tr class="odd">
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>0.35</td>
+<td>0.205882</td>
+<td>0.140845</td>
+<td>1.0</td>
+<td>10.0</td>
+<td>60.0</td>
+<td>60.0</td>
+<td>0.166667</td>
+<td>1.0</td>
+<td>0.285714</td>
+<td>11652.791925</td>
+<td>194.213199</td>
+<td>209.38</td>
+<td>1.0</td>
+<td>0.166859</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>1</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>0.5</td>
+<td>0.266667</td>
+<td>0.137931</td>
+<td>0.444444</td>
+<td>10.0</td>
+<td>60.0</td>
+<td>60.0</td>
+<td>0.15</td>
+<td>1.0</td>
+<td>0.26087</td>
+<td>10565.449548</td>
+<td>176.090826</td>
+<td>171.59</td>
+<td>1.0</td>
+<td>0.160688</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>1</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>0.35</td>
+<td>0.253521</td>
+<td>0.118644</td>
+<td>1.0</td>
+<td>10.0</td>
+<td>60.0</td>
+<td>60.0</td>
+<td>0.116667</td>
+<td>1.0</td>
+<td>0.208955</td>
+<td>9546.391323</td>
+<td>159.106522</td>
+<td>165.2</td>
+<td>1.0</td>
+<td>0.160212</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>1</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>0.5</td>
+<td>0.307692</td>
+<td>0.166667</td>
+<td>0.777778</td>
+<td>10.0</td>
+<td>60.0</td>
+<td>60.0</td>
+<td>0.116667</td>
+<td>0.777778</td>
+<td>0.202899</td>
+<td>10111.77825</td>
+<td>168.529637</td>
+<td>129.04</td>
+<td>0.787886</td>
+<td>0.163613</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>1</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>0.5</td>
+<td>0.27451</td>
+<td>0.171429</td>
+<td>0.666667</td>
+<td>10.0</td>
+<td>60.0</td>
+<td>60.0</td>
+<td>0.133333</td>
+<td>0.888889</td>
+<td>0.231884</td>
+<td>10175.630775</td>
+<td>169.593846</td>
+<td>166.74</td>
+<td>0.910849</td>
+<td>0.158444</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>1</td>
+<td>8</td>
+<td>9</td>
+<td>10</td>
+<td>0.35</td>
+<td>0.290323</td>
+<td>0.177419</td>
+<td>1.0</td>
+<td>10.0</td>
+<td>60.0</td>
+<td>60.0</td>
+<td>0.166667</td>
+<td>0.909091</td>
+<td>0.28169</td>
+<td>10752.960125</td>
+<td>179.216002</td>
+<td>234.17</td>
+<td>0.937242</td>
+<td>0.162808</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>1</td>
+<td>9</td>
+<td>10</td>
+<td>11</td>
+<td>0.35</td>
+<td>0.30137</td>
+<td>0.177419</td>
+<td>1.0</td>
+<td>10.0</td>
+<td>60.0</td>
+<td>60.0</td>
+<td>0.133333</td>
+<td>0.727273</td>
+<td>0.225352</td>
+<td>12212.705525</td>
+<td>203.545092</td>
+<td>185.92</td>
+<td>0.752438</td>
+<td>0.161991</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>1</td>
+<td>10</td>
+<td>11</td>
+<td>12</td>
+<td>0.35</td>
+<td>0.30137</td>
+<td>0.138462</td>
+<td>1.0</td>
+<td>10.0</td>
+<td>60.0</td>
+<td>60.0</td>
+<td>0.15</td>
+<td>1.0</td>
+<td>0.26087</td>
+<td>10103.247375</td>
+<td>168.387456</td>
+<td>219.68</td>
+<td>1.0</td>
+<td>0.158278</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>1</td>
+<td>11</td>
+<td>12</td>
+<td>13</td>
+<td>0.5</td>
+<td>0.341463</td>
+<td>0.135135</td>
+<td>0.5</td>
+<td>10.0</td>
+<td>60.0</td>
+<td>60.0</td>
+<td>0.166667</td>
+<td>1.0</td>
+<td>0.285714</td>
+<td>9554.4226</td>
+<td>159.240377</td>
+<td>194.97</td>
+<td>1.0</td>
+<td>0.164788</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="8840d9a1" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    ggplot(results.rolling_origin_metrics, aes(<span class="st">"test_period"</span>, MetricCol.PRECISION_AT_K))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_line()</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_point(size<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> labs(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="st">"Rolling-origin approval-budget precision over time"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">"Test pay period"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="st">"Precision at selected budget"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> theme_minimal()</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+   <div id="D4ebhu"></div>
+   <script type="text/javascript" data-lets-plot-script="plot">
+   
+   (function() {
+   // ----------
+   
+   const forceImmediateRender = false;
+   const responsive = false;
+   
+   let sizing = {
+       width_mode: "MIN",
+       height_mode: "SCALED",
+       width: null, 
+       height: null 
+   };
+   
+   const preferredWidth = document.body.dataset.letsPlotPreferredWidth;
+   if (preferredWidth !== undefined) {
+       sizing = {
+           width_mode: 'FIXED',
+           height_mode: 'SCALED',
+           width: parseFloat(preferredWidth)
+       };
+   }
+   
+   const containerDiv = document.getElementById("D4ebhu");
+   let fig = null;
+   
+   function renderPlot() {
+       if (fig === null) {
+           const plotSpec = {
+"data":{
+"test_period":[5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0],
+"precision_at_k":[0.16666666666666666,0.15,0.11666666666666667,0.11666666666666667,0.13333333333333333,0.16666666666666666,0.13333333333333333,0.15,0.16666666666666666]
+},
+"mapping":{
+"x":"test_period",
+"y":"precision_at_k"
+},
+"data_meta":{
+"series_annotations":[{
+"type":"int",
+"column":"origin"
+},{
+"type":"int",
+"column":"train_start_period"
+},{
+"type":"int",
+"column":"train_end_period"
+},{
+"type":"int",
+"column":"validation_period"
+},{
+"type":"int",
+"column":"test_period"
+},{
+"type":"float",
+"column":"selected_threshold"
+},{
+"type":"float",
+"column":"validation_f1"
+},{
+"type":"float",
+"column":"threshold_precision"
+},{
+"type":"float",
+"column":"threshold_recall"
+},{
+"type":"float",
+"column":"k"
+},{
+"type":"float",
+"column":"review_volume"
+},{
+"type":"float",
+"column":"native_review_burden"
+},{
+"type":"float",
+"column":"precision_at_k"
+},{
+"type":"float",
+"column":"recall_at_k"
+},{
+"type":"float",
+"column":"f1_at_k"
+},{
+"type":"float",
+"column":"exposure_captured_at_k"
+},{
+"type":"float",
+"column":"exposure_per_review"
+},{
+"type":"float",
+"column":"dollars_captured_at_k"
+},{
+"type":"float",
+"column":"dollar_capture_rate"
+},{
+"type":"float",
+"column":"test_score_mean"
+}]
+},
+"ggtitle":{
+"text":"Rolling-origin approval-budget precision over time"
+},
+"guides":{
+"x":{
+"title":"Test pay period"
+},
+"y":{
+"title":"Precision at selected budget"
+}
+},
+"theme":{
+"name":"minimal"
+},
+"kind":"plot",
+"scales":[],
+"layers":[{
+"geom":"line",
+"mapping":{
+},
+"data_meta":{
+},
+"data":{
+}
+},{
+"geom":"point",
+"mapping":{
+},
+"data_meta":{
+},
+"size":3.0,
+"data":{
+}
+}],
+"metainfo_list":[],
+"spec_id":"5"
+};
+           window.letsPlotCall(function() { fig = LetsPlot.buildPlotFromProcessedSpecs(plotSpec, containerDiv, sizing); });
+       } else {
+           fig.updateView({});
+       }
+   }
+   
+   const renderImmediately = 
+       forceImmediateRender || (
+           sizing.width_mode === 'FIXED' && 
+           (sizing.height_mode === 'FIXED' || sizing.height_mode === 'SCALED')
+       );
+   
+   if (renderImmediately) {
+       renderPlot();
+   }
+   
+   if (!renderImmediately || responsive) {
+       // Set up observer for initial sizing or continuous monitoring
+       var observer = new ResizeObserver(function(entries) {
+           for (let entry of entries) {
+               if (entry.contentBoxSize && 
+                   entry.contentBoxSize[0].inlineSize > 0) {
+                   if (!responsive && observer) {
+                       observer.disconnect();
+                       observer = null;
+                   }
+                   renderPlot();
+                   if (!responsive) {
+                       break;
+                   }
+               }
+           }
+       });
+       
+       observer.observe(containerDiv);
+   }
+   
+   // ----------
+   })();
+   
+   </script>
+</div>
+</div>
+<div id="c453a09f" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>results.uncertainty_bucket_metrics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (2, 5)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">uncertainty_bucket</th>
+<th data-quarto-table-cell-role="th">records</th>
+<th data-quarto-table-cell-role="th">true_anomalies</th>
+<th data-quarto-table-cell-role="th">anomaly_rate</th>
+<th data-quarto-table-cell-role="th">avg_uncertainty</th>
+</tr>
+<tr class="odd">
+<th>str</th>
+<th>u32</th>
+<th>i64</th>
+<th>f64</th>
+<th>f64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"Low"</td>
+<td>11074</td>
+<td>93</td>
+<td>0.008398</td>
+<td>0.229317</td>
+</tr>
+<tr class="even">
+<td>"Medium"</td>
+<td>1291</td>
+<td>37</td>
+<td>0.02866</td>
+<td>0.388043</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="42296f77" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    ggplot(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        results.uncertainty_bucket_metrics,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        aes(ReviewCol.UNCERTAINTY_BUCKET, MetricCol.ANOMALY_RATE),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_bar(stat<span class="op">=</span><span class="st">"identity"</span>, fill<span class="op">=</span><span class="st">"#2563eb"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> labs(</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="st">"Evaluation anomaly rate by uncertainty bucket"</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">"Uncertainty bucket"</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="st">"Synthetic anomaly rate"</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> theme_minimal()</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+   <div id="kprPGp"></div>
+   <script type="text/javascript" data-lets-plot-script="plot">
+   
+   (function() {
+   // ----------
+   
+   const forceImmediateRender = false;
+   const responsive = false;
+   
+   let sizing = {
+       width_mode: "MIN",
+       height_mode: "SCALED",
+       width: null, 
+       height: null 
+   };
+   
+   const preferredWidth = document.body.dataset.letsPlotPreferredWidth;
+   if (preferredWidth !== undefined) {
+       sizing = {
+           width_mode: 'FIXED',
+           height_mode: 'SCALED',
+           width: parseFloat(preferredWidth)
+       };
+   }
+   
+   const containerDiv = document.getElementById("kprPGp");
+   let fig = null;
+   
+   function renderPlot() {
+       if (fig === null) {
+           const plotSpec = {
+"data":{
+"uncertainty_bucket":["Low","Medium"],
+"anomaly_rate":[0.008398049485280838,0.02865995352439969]
+},
+"mapping":{
+"x":"uncertainty_bucket",
+"y":"anomaly_rate"
+},
+"data_meta":{
+"series_annotations":[{
+"type":"str",
+"column":"uncertainty_bucket"
+},{
+"type":"int",
+"column":"records"
+},{
+"type":"int",
+"column":"true_anomalies"
+},{
+"type":"float",
+"column":"anomaly_rate"
+},{
+"type":"float",
+"column":"avg_uncertainty"
+}]
+},
+"ggtitle":{
+"text":"Evaluation anomaly rate by uncertainty bucket"
+},
+"guides":{
+"x":{
+"title":"Uncertainty bucket"
+},
+"y":{
+"title":"Synthetic anomaly rate"
+}
+},
+"theme":{
+"name":"minimal"
+},
+"kind":"plot",
+"scales":[],
+"layers":[{
+"geom":"bar",
+"stat":"identity",
+"mapping":{
+},
+"data_meta":{
+},
+"fill":"#2563eb",
+"data":{
+}
+}],
+"metainfo_list":[],
+"spec_id":"6"
+};
+           window.letsPlotCall(function() { fig = LetsPlot.buildPlotFromProcessedSpecs(plotSpec, containerDiv, sizing); });
+       } else {
+           fig.updateView({});
+       }
+   }
+   
+   const renderImmediately = 
+       forceImmediateRender || (
+           sizing.width_mode === 'FIXED' && 
+           (sizing.height_mode === 'FIXED' || sizing.height_mode === 'SCALED')
+       );
+   
+   if (renderImmediately) {
+       renderPlot();
+   }
+   
+   if (!renderImmediately || responsive) {
+       // Set up observer for initial sizing or continuous monitoring
+       var observer = new ResizeObserver(function(entries) {
+           for (let entry of entries) {
+               if (entry.contentBoxSize && 
+                   entry.contentBoxSize[0].inlineSize > 0) {
+                   if (!responsive && observer) {
+                       observer.disconnect();
+                       observer = null;
+                   }
+                   renderPlot();
+                   if (!responsive) {
+                       break;
+                   }
+               }
+           }
+       });
+       
+       observer.observe(containerDiv);
+   }
+   
+   // ----------
+   })();
+   
+   </script>
+</div>
+</div>
+<div id="65cc3250" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>results.risk_coverage_analysis</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 5)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">coverage</th>
+<th data-quarto-table-cell-role="th">records</th>
+<th data-quarto-table-cell-role="th">abstained_records</th>
+<th data-quarto-table-cell-role="th">review_precision</th>
+<th data-quarto-table-cell-role="th">review_budget</th>
+</tr>
+<tr class="odd">
+<th>f64</th>
+<th>i64</th>
+<th>i64</th>
+<th>f64</th>
+<th>i64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.0</td>
+<td>12365</td>
+<td>0</td>
+<td>0.3</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>0.9</td>
+<td>11128</td>
+<td>1237</td>
+<td>0.4</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td>0.8</td>
+<td>9892</td>
+<td>2473</td>
+<td>0.7</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>0.7</td>
+<td>8655</td>
+<td>3710</td>
+<td>0.3</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td>0.6</td>
+<td>7419</td>
+<td>4946</td>
+<td>0.3</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="fa95cdb3" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    ggplot(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        results.risk_coverage_analysis,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        aes(MetricCol.COVERAGE, MetricCol.REVIEW_PRECISION),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_line()</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_point(size<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> labs(</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="st">"Risk-coverage diagnostic"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">"Share of least-uncertain records retained"</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="st">"Review precision"</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> theme_minimal()</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+   <div id="rXGTlx"></div>
+   <script type="text/javascript" data-lets-plot-script="plot">
+   
+   (function() {
+   // ----------
+   
+   const forceImmediateRender = false;
+   const responsive = false;
+   
+   let sizing = {
+       width_mode: "MIN",
+       height_mode: "SCALED",
+       width: null, 
+       height: null 
+   };
+   
+   const preferredWidth = document.body.dataset.letsPlotPreferredWidth;
+   if (preferredWidth !== undefined) {
+       sizing = {
+           width_mode: 'FIXED',
+           height_mode: 'SCALED',
+           width: parseFloat(preferredWidth)
+       };
+   }
+   
+   const containerDiv = document.getElementById("rXGTlx");
+   let fig = null;
+   
+   function renderPlot() {
+       if (fig === null) {
+           const plotSpec = {
+"data":{
+"coverage":[1.0,0.9,0.8,0.7,0.6],
+"review_precision":[0.3,0.4,0.7,0.3,0.3]
+},
+"mapping":{
+"x":"coverage",
+"y":"review_precision"
+},
+"data_meta":{
+"series_annotations":[{
+"type":"float",
+"column":"coverage"
+},{
+"type":"int",
+"column":"records"
+},{
+"type":"int",
+"column":"abstained_records"
+},{
+"type":"float",
+"column":"review_precision"
+},{
+"type":"int",
+"column":"review_budget"
+}]
+},
+"ggtitle":{
+"text":"Risk-coverage diagnostic"
+},
+"guides":{
+"x":{
+"title":"Share of least-uncertain records retained"
+},
+"y":{
+"title":"Review precision"
+}
+},
+"theme":{
+"name":"minimal"
+},
+"kind":"plot",
+"scales":[],
+"layers":[{
+"geom":"line",
+"mapping":{
+},
+"data_meta":{
+},
+"data":{
+}
+},{
+"geom":"point",
+"mapping":{
+},
+"data_meta":{
+},
+"size":3.0,
+"data":{
+}
+}],
+"metainfo_list":[],
+"spec_id":"7"
+};
+           window.letsPlotCall(function() { fig = LetsPlot.buildPlotFromProcessedSpecs(plotSpec, containerDiv, sizing); });
+       } else {
+           fig.updateView({});
+       }
+   }
+   
+   const renderImmediately = 
+       forceImmediateRender || (
+           sizing.width_mode === 'FIXED' && 
+           (sizing.height_mode === 'FIXED' || sizing.height_mode === 'SCALED')
+       );
+   
+   if (renderImmediately) {
+       renderPlot();
+   }
+   
+   if (!renderImmediately || responsive) {
+       // Set up observer for initial sizing or continuous monitoring
+       var observer = new ResizeObserver(function(entries) {
+           for (let entry of entries) {
+               if (entry.contentBoxSize && 
+                   entry.contentBoxSize[0].inlineSize > 0) {
+                   if (!responsive && observer) {
+                       observer.disconnect();
+                       observer = null;
+                   }
+                   renderPlot();
+                   if (!responsive) {
+                       break;
+                   }
+               }
+           }
+       });
+       
+       observer.observe(containerDiv);
+   }
+   
+   // ----------
+   })();
+   
+   </script>
+</div>
+</div>
+<div id="61f4cdb8" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>results.expected_gross_pay_interval_metrics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 4)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">normal_interval_coverage</th>
+<th data-quarto-table-cell-role="th">anomaly_exceeds_p90_rate</th>
+<th data-quarto-table-cell-role="th">avg_interval_width</th>
+<th data-quarto-table-cell-role="th">avg_anomaly_excess_vs_p90</th>
+</tr>
+<tr class="odd">
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+<th>f64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.721782</td>
+<td>0.346154</td>
+<td>79.618719</td>
+<td>14.431411</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="what-this-proves" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-proves">What This Proves</h2>
+<p>The ML score is useful because it can rank unusual multivariate combinations that do not reduce to one raw threshold. The hybrid score is the stronger product signal because payroll approval also needs deterministic policy rules, robust peer/history context, premium eligibility, schedule/timeclock evidence, uncertainty context, and estimated exposure. Simpler components remain valuable: rule and premium signals are strong in premium-heavy scenarios, while hybrid ranking is the deployable approval queue because it balances detection, actionability, and business impact.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

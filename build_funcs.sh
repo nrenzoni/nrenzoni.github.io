@@ -1,74 +1,182 @@
-PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+WEBSITE_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DEV_ROOT="$(cd "$WEBSITE_ROOT/.." && pwd)"
+TRADING_RESEARCH_ROOT="$DEV_ROOT/trading-research"
+PAYROLL_ANOMALY_RANKING_ROOT="$DEV_ROOT/payroll-anomaly-ranking"
 
+# List source notebooks and their website-relative staging destinations.
+function staged_notebooks() {
+	cat <<EOF
+$TRADING_RESEARCH_ROOT/notebooks/render-demo.ipynb|notebooks/render-demo.ipynb
+$TRADING_RESEARCH_ROOT/notebooks/pr_graph/eda_04_intraday_news_execution.ipynb|notebooks/pr_graph/eda_04_intraday_news_execution.ipynb
+$TRADING_RESEARCH_ROOT/notebooks/target_engineering/eda_01_target_engineering.ipynb|notebooks/target_engineering/eda_01_target_engineering.ipynb
+$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/01_problem_framing_and_data_maturity.ipynb|payroll-anomaly-ranking/01_problem_framing_and_data_maturity.ipynb
+$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/02_feature_engineering_and_baselines.ipynb|payroll-anomaly-ranking/02_feature_engineering_and_baselines.ipynb
+$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/03_modeling_evaluation_and_error_analysis.ipynb|payroll-anomaly-ranking/03_modeling_evaluation_and_error_analysis.ipynb
+$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/04_review_queue_explainability_and_thresholds.ipynb|payroll-anomaly-ranking/04_review_queue_explainability_and_thresholds.ipynb
+$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/05_production_monitoring_and_deployment_path.ipynb|payroll-anomaly-ranking/05_production_monitoring_and_deployment_path.ipynb
+$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/06_internal_statistical_diagnostics.ipynb|payroll-anomaly-ranking/06_internal_statistical_diagnostics.ipynb
+$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/07_simulation_and_stress_testing.ipynb|payroll-anomaly-ranking/07_simulation_and_stress_testing.ipynb
+$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/08_snf_payroll_approval_case_studies.ipynb|payroll-anomaly-ranking/08_snf_payroll_approval_case_studies.ipynb
+$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/09_model_ablation_and_ml_value.ipynb|payroll-anomaly-ranking/09_model_ablation_and_ml_value.ipynb
+$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/payroll_anomaly_detection.ipynb|payroll-anomaly-ranking/payroll_anomaly_detection.ipynb
+EOF
+}
+
+# Run commands inside the uv environment that has Quarto/Jupyter deps.
 function uv_run_project() {
-	UV_PROJECT_ENVIRONMENT="$PROJECT_ROOT/.venv" uv run --project "$PROJECT_ROOT" --extra quarto "$@"
+	UV_PROJECT_ENVIRONMENT="$TRADING_RESEARCH_ROOT/.venv" uv run --project "$TRADING_RESEARCH_ROOT" --extra quarto "$@"
 }
 
+# Fail unless deployment starts from main.
+function require_main_branch() {
+	local branch
+	branch="$(git branch --show-current)"
+	if [ "$branch" != "main" ]
+	then
+		echo >&2 "cannot $1: current branch is $branch, expected main."
+		return 1
+	fi
+}
+
+# Fail if source or generated changes are already pending.
 function require_clean_work_tree() {
-    # Update the index
-    git update-index -q --ignore-submodules --refresh
-    err=0
+	git update-index -q --ignore-submodules --refresh
+	local err=0
 
-    # Disallow unstaged changes in the working tree
-    if ! git diff-files --quiet --ignore-submodules --
-    then
-        echo >&2 "cannot $1: you have unstaged changes."
-        git diff-files --name-status -r --ignore-submodules -- >&2
-        err=1
-    fi
+	if ! git diff-files --quiet --ignore-submodules --
+	then
+		echo >&2 "cannot $1: you have unstaged changes."
+		git diff-files --name-status -r --ignore-submodules -- >&2
+		err=1
+	fi
 
-    # Disallow uncommitted changes in the index
-    if ! git diff-index --cached --quiet HEAD --ignore-submodules --
-    then
-        echo >&2 "cannot $1: your index contains uncommitted changes."
-        git diff-index --cached --name-status -r --ignore-submodules HEAD -- >&2
-        err=1
-    fi
+	if ! git diff-index --cached --quiet HEAD --ignore-submodules --
+	then
+		echo >&2 "cannot $1: your index contains uncommitted changes."
+		git diff-index --cached --name-status -r --ignore-submodules HEAD -- >&2
+		err=1
+	fi
 
-    if [ $err = 1 ]
-    then
-        echo >&2 "Please commit or stash them."
-        return 1
-    fi
+	if [ "$err" = 1 ]
+	then
+		echo >&2 "Please commit or stash them."
+		return 1
+	fi
 }
 
-# need changes committed in order to checkout gh-pages branch in flow
+# Fail unless deployment is starting from a clean main checkout.
 function require_main_branch_clean() {
-	git checkout main -q
-	return $(require_clean_work_tree)
+	require_main_branch "$1" || return 1
+	require_clean_work_tree "$1"
 }
 
-# builds notebooks
-function execute_notebooks() {
-	uv_run_project jupyter nbconvert --inplace --execute "$@"
+# Validate local repos and website inputs before rendering.
+function validate_sources() {
+	if ! command -v git >/dev/null 2>&1
+	then
+		echo >&2 "missing required command: git"
+		return 1
+	fi
+
+	if ! command -v uv >/dev/null 2>&1
+	then
+		echo >&2 "missing required command: uv"
+		return 1
+	fi
+
+	for path in "$TRADING_RESEARCH_ROOT" "$PAYROLL_ANOMALY_RANKING_ROOT"
+	do
+		if [ ! -d "$path" ]
+		then
+			echo >&2 "missing source directory: $path"
+			return 1
+		fi
+	done
+
+	local src dest
+	while IFS='|' read -r src dest
+	do
+		if [ ! -f "$src" ]
+		then
+			echo >&2 "missing source notebook: $src"
+			return 1
+		fi
+	done < <(staged_notebooks)
+
+	for path in "$WEBSITE_ROOT/_quarto.yml" "$WEBSITE_ROOT/index.qmd" "$WEBSITE_ROOT/about.qmd" "$WEBSITE_ROOT/trading-research.qmd" "$WEBSITE_ROOT/payroll-anomaly-ranking/index.qmd" "$WEBSITE_ROOT/styles.css"
+	do
+		if [ ! -f "$path" ]
+		then
+			echo >&2 "missing website file: $path"
+			return 1
+		fi
+	done
 }
 
-# quarto CLI runs against the project-local uv environment
-function quarto_render() {
-	rm -r _site || true
+# Copy selected notebooks into stable website paths.
+function stage_notebooks() {
+	rm -rf "$WEBSITE_ROOT/notebooks"
+	rm -f "$WEBSITE_ROOT/payroll-anomaly-ranking"/*.ipynb
+
+	local src dest
+	while IFS='|' read -r src dest
+	do
+		mkdir -p "$(dirname "$WEBSITE_ROOT/$dest")"
+		cp "$src" "$WEBSITE_ROOT/$dest"
+	done < <(staged_notebooks)
+}
+
+# Render the Quarto site into docs/ for GitHub Pages.
+function render_site() {
+	stage_notebooks
+	rm -rf docs
 	uv_run_project quarto render
 }
 
-# fix relative html links due to quarto
-function post_render() {
-	mv notebooks _site/
-	find _site -name '*.html' -type f -print0 | xargs -0 sed -i -e 's/quarto_website\///g'
-	sed -i -e 's|\.\.\/||g' _site/index.html
+# Verify the rendered site has expected entry points.
+function validate_site() {
+	for path in "$WEBSITE_ROOT/docs/index.html" "$WEBSITE_ROOT/docs/search.json"
+	do
+		if [ ! -f "$path" ]
+		then
+			echo >&2 "missing rendered site file: $path"
+			return 1
+		fi
+	done
 }
 
+# Commit and push only generated docs/ changes.
+function publish_site() {
+	local message="${1:-}"
+	if [ -z "$message" ]
+	then
+		echo >&2 "usage: publish_site <message>"
+		return 1
+	fi
 
-# arg1: commit msg
-# push _site content to root of gh_pages branch
-function update_github_pages() {
-	git checkout gh-pages -q
-	
-	git --work-tree=_site add --all
-	git --work-tree=_site commit -m "update site: $1"
-	git --work-tree=_site push
-	
-	
-	# clean residual files remaining
-	git reset --hard
-	# restore to main branch
-	git checkout main -q
+	git add docs
+	if git diff --cached --quiet -- docs
+	then
+		echo "site unchanged; nothing to publish."
+		return 0
+	fi
+
+	git commit -m "update site: $message" -- docs
+	git push origin main
+}
+
+# Full manual deployment entrypoint.
+function deploy_site() {
+	local message="${1:-}"
+	if [ -z "$message" ]
+	then
+		echo >&2 "usage: deploy_site <message>"
+		return 1
+	fi
+
+	require_main_branch_clean deploy || return 1
+	validate_sources || return 1
+	render_site || return 1
+	validate_site || return 1
+	publish_site "$message"
 }

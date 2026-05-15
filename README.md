@@ -1,7 +1,37 @@
-Hi! this repo is for my personal website where I collect my personal jupyter notebooks on different things I'm experimenting with.
----
-Below is my airflow DAG for building the ipynb notebook files, rendering the website using Quarto, and deploying the _site directory to the gh-pages branch:
+This repo is for my personal website where I collect selected Jupyter notebooks from multiple local research projects.
 
-![image](https://github.com/nrenzoni/nrenzoni.github.io/assets/31897391/1b892284-b380-46f6-9f54-141497ca0112)
+The Quarto project is intended to live next to the research project directories, for example:
 
-Each of the airflow DAG steps uses a similar bash command: ```. build_funcs.sh && {bash_command}```.
+```text
+/home/trade/Dev/quarto_website
+/home/trade/Dev/trading-research
+/home/trade/Dev/payroll-anomaly-ranking
+```
+
+`build_funcs.sh` stages only the selected notebooks into website-owned paths before rendering. This keeps published URLs stable while allowing source notebooks to live in separate repos.
+
+The website is manually rendered into `docs/` and deployed from the `main` branch when needed. GitHub Pages should be configured with:
+
+```text
+Source: Deploy from a branch
+Branch: main
+Folder: /docs
+```
+
+Manual deployment:
+
+```bash
+. build_funcs.sh
+deploy_site "short description of the update"
+```
+
+`deploy_site` expects to run from a clean `main` branch. Commit source changes first, then run the deploy when you want to refresh the published `docs/` output.
+
+Useful manual checks:
+
+```bash
+. build_funcs.sh
+validate_sources
+render_site
+validate_site
+```

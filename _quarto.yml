@@ -1,15 +1,31 @@
 project:
   type: website
+  output-dir: docs
   render:
     - "*.qmd"
-    - "../notebooks/render-demo.ipynb"
-    - "../notebooks/pr_graph/eda_04_intraday_news_execution.ipynb"
-    - "../notebooks/target_engineering/eda_01_target_engineering.ipynb"
+    - "payroll-anomaly-ranking/index.qmd"
+    - "notebooks/render-demo.ipynb"
+    - "notebooks/pr_graph/eda_04_intraday_news_execution.ipynb"
+    - "notebooks/target_engineering/eda_01_target_engineering.ipynb"
+    - "payroll-anomaly-ranking/01_problem_framing_and_data_maturity.ipynb"
+    - "payroll-anomaly-ranking/02_feature_engineering_and_baselines.ipynb"
+    - "payroll-anomaly-ranking/03_modeling_evaluation_and_error_analysis.ipynb"
+    - "payroll-anomaly-ranking/04_review_queue_explainability_and_thresholds.ipynb"
+    - "payroll-anomaly-ranking/05_production_monitoring_and_deployment_path.ipynb"
+    - "payroll-anomaly-ranking/06_internal_statistical_diagnostics.ipynb"
+    - "payroll-anomaly-ranking/07_simulation_and_stress_testing.ipynb"
+    - "payroll-anomaly-ranking/08_snf_payroll_approval_case_studies.ipynb"
+    - "payroll-anomaly-ranking/09_model_ablation_and_ml_value.ipynb"
+    - "payroll-anomaly-ranking/payroll_anomaly_detection.ipynb"
 
 website:
   title: "Nathan's Research"
   navbar:
     right:
+      - text: "Trading Research"
+        href: trading-research.qmd
+      - text: "Payroll Anomaly Ranking"
+        href: payroll-anomaly-ranking/index.qmd
       - about.qmd
       - icon: github
         href: https://github.com/nrenzoni
@@ -29,4 +45,3 @@ execute:
   freeze: true
 
 date-modified: 'last-modified'
-

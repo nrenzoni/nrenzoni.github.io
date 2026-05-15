@@ -1,0 +1,27 @@
+---
+title: "Payroll Anomaly Ranking"
+listing:
+  contents:
+    - "01_problem_framing_and_data_maturity.ipynb"
+    - "02_feature_engineering_and_baselines.ipynb"
+    - "03_modeling_evaluation_and_error_analysis.ipynb"
+    - "04_review_queue_explainability_and_thresholds.ipynb"
+    - "05_production_monitoring_and_deployment_path.ipynb"
+    - "06_internal_statistical_diagnostics.ipynb"
+    - "07_simulation_and_stress_testing.ipynb"
+    - "08_snf_payroll_approval_case_studies.ipynb"
+    - "09_model_ablation_and_ml_value.ipynb"
+    - "payroll_anomaly_detection.ipynb"
+  sort: "date desc"
+  type: table
+  categories: false
+  fields: [title, date, date-modified, categories]
+  sort-ui: false
+  filter-ui: false
+  date-format: "medium"
+page-layout: full
+title-block-banner: true
+date-modified: ""
+---
+
+Selected notebooks from the `payroll-anomaly-ranking` project.

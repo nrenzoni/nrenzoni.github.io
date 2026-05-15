@@ -1,18 +1,13 @@
 ---
 title: "Nathan's Research Notebooks"
-listing:
-  contents:
-    - "../notebooks/target_engineering/eda_01_target_engineering.ipynb"
-    - "../notebooks/pr_graph/eda_04_intraday_news_execution.ipynb"
-  sort: "date desc"
-  type: table
-  categories: false
-  fields: [title, date, date-modified, categories]
-  sort-ui: false
-  filter-ui: false
-  date-format: 'medium'
 page-layout: full
 title-block-banner: true
 date-modified: ""
 ---
 
+This site collects selected research notebooks from multiple projects.
+
+## Notebook Collections
+
+- [Trading Research](trading-research.qmd)
+- [Payroll Anomaly Ranking](payroll-anomaly-ranking/index.qmd)
