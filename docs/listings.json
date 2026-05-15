@@ -2,16 +2,8 @@
   {
     "listing": "/payroll-anomaly-ranking/index.html",
     "items": [
-      "/payroll-anomaly-ranking/01_problem_framing_and_data_maturity.html",
-      "/payroll-anomaly-ranking/02_feature_engineering_and_baselines.html",
-      "/payroll-anomaly-ranking/03_modeling_evaluation_and_error_analysis.html",
-      "/payroll-anomaly-ranking/04_review_queue_explainability_and_thresholds.html",
-      "/payroll-anomaly-ranking/05_production_monitoring_and_deployment_path.html",
-      "/payroll-anomaly-ranking/06_internal_statistical_diagnostics.html",
-      "/payroll-anomaly-ranking/07_simulation_and_stress_testing.html",
       "/payroll-anomaly-ranking/08_snf_payroll_approval_case_studies.html",
-      "/payroll-anomaly-ranking/09_model_ablation_and_ml_value.html",
-      "/payroll-anomaly-ranking/payroll_anomaly_detection.html"
+      "/payroll-anomaly-ranking/09_model_ablation_and_ml_value.html"
     ]
   },
   {
