@@ -1,9 +1,8 @@
 ---
-title: "Payroll Anomaly Ranking"
+title: "SNF Payroll Ranker"
 listing:
   contents:
-    - "08_snf_payroll_approval_case_studies.ipynb"
-    - "09_model_ablation_and_ml_value.ipynb"
+    - "snf_payroll_ranker_report.ipynb"
   sort: "date desc"
   type: table
   categories: false
@@ -16,4 +15,4 @@ title-block-banner: true
 date-modified: ""
 ---
 
-Selected notebooks from the `payroll-anomaly-ranking` project.
+Selected notebooks from the `snf-payroll-ranker` project.

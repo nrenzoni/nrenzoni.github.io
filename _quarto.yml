@@ -3,12 +3,11 @@ project:
   output-dir: docs
   render:
     - "*.qmd"
-    - "payroll-anomaly-ranking/index.qmd"
+    - "snf-payroll-ranker/index.qmd"
     - "notebooks/render-demo.ipynb"
     - "notebooks/pr_graph/eda_04_intraday_news_execution.ipynb"
     - "notebooks/target_engineering/eda_01_target_engineering.ipynb"
-    - "payroll-anomaly-ranking/08_snf_payroll_approval_case_studies.ipynb"
-    - "payroll-anomaly-ranking/09_model_ablation_and_ml_value.ipynb"
+    - "snf-payroll-ranker/snf_payroll_ranker_report.ipynb"
 
 website:
   title: "Nathan's Research"
@@ -16,8 +15,8 @@ website:
     right:
       - text: "Trading Research"
         href: trading-research.qmd
-      - text: "Payroll Anomaly Ranking"
-        href: payroll-anomaly-ranking/index.qmd
+      - text: "SNF Payroll Ranker"
+        href: snf-payroll-ranker/index.qmd
       - about.qmd
       - icon: github
         href: https://github.com/nrenzoni

@@ -9,8 +9,7 @@ function staged_notebooks() {
 $TRADING_RESEARCH_ROOT/notebooks/render-demo.ipynb|notebooks/render-demo.ipynb
 $TRADING_RESEARCH_ROOT/notebooks/pr_graph/eda_04_intraday_news_execution.ipynb|notebooks/pr_graph/eda_04_intraday_news_execution.ipynb
 $TRADING_RESEARCH_ROOT/notebooks/target_engineering/eda_01_target_engineering.ipynb|notebooks/target_engineering/eda_01_target_engineering.ipynb
-$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/08_snf_payroll_approval_case_studies.ipynb|payroll-anomaly-ranking/08_snf_payroll_approval_case_studies.ipynb
-$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/09_model_ablation_and_ml_value.ipynb|payroll-anomaly-ranking/09_model_ablation_and_ml_value.ipynb
+$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/snf_payroll_ranker_report.ipynb|snf-payroll-ranker/snf_payroll_ranker_report.ipynb
 EOF
 }
 
@@ -95,7 +94,7 @@ function validate_sources() {
 		fi
 	done < <(staged_notebooks)
 
-	for path in "$WEBSITE_ROOT/_quarto.yml" "$WEBSITE_ROOT/index.qmd" "$WEBSITE_ROOT/about.qmd" "$WEBSITE_ROOT/trading-research.qmd" "$WEBSITE_ROOT/payroll-anomaly-ranking/index.qmd" "$WEBSITE_ROOT/styles.css"
+	for path in "$WEBSITE_ROOT/_quarto.yml" "$WEBSITE_ROOT/index.qmd" "$WEBSITE_ROOT/about.qmd" "$WEBSITE_ROOT/trading-research.qmd" "$WEBSITE_ROOT/snf-payroll-ranker/index.qmd" "$WEBSITE_ROOT/styles.css"
 	do
 		if [ ! -f "$path" ]
 		then
@@ -109,6 +108,7 @@ function validate_sources() {
 function stage_notebooks() {
 	rm -rf "$WEBSITE_ROOT/notebooks"
 	rm -f "$WEBSITE_ROOT/payroll-anomaly-ranking"/*.ipynb
+	rm -f "$WEBSITE_ROOT/snf-payroll-ranker"/*.ipynb
 
 	local src dest
 	while IFS='|' read -r src dest
