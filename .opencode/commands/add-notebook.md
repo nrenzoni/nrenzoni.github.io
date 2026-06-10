@@ -17,7 +17,7 @@ Requirements:
 
 2. Inspect `build_funcs.sh` and `_quarto.yml`.
 
-Use the existing `*_ROOT` variables and `staged_notebooks` mappings to infer project conventions. Do not hardcode project names like `trading-research` or `payroll-anomaly-ranking`; treat them only as current examples.
+Use the existing `*_ROOT` variables and `staged_notebooks` mappings to infer project conventions. Do not hardcode project names like `trading-research` or `snf-payroll-ranker`; treat them only as current examples.
 
 3. Infer the source project root.
 

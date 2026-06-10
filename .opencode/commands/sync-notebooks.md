@@ -81,7 +81,7 @@ Read each file first, then make minimal targeted edits:
 After editing all configuration files, delete the staged `.ipynb` file at the destination path:
 
 ```bash
-rm -f "payroll-anomaly-ranking/01_problem_framing_and_data_maturity.ipynb"
+rm -f "snf-payroll-ranker/snf_payroll_ranker_report.ipynb"
 ```
 
 (use the actual destination path from the removed entry, not the example above)

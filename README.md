@@ -5,7 +5,7 @@ The Quarto project is intended to live next to the research project directories,
 ```text
 /home/trade/Dev/quarto_website
 /home/trade/Dev/trading-research
-/home/trade/Dev/payroll-anomaly-ranking
+/home/trade/Dev/snf-payroll-ranker
 ```
 
 `build_funcs.sh` stages only the selected notebooks into website-owned paths before rendering. This keeps published URLs stable while allowing source notebooks to live in separate repos.

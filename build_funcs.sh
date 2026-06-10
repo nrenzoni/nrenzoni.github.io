@@ -1,7 +1,7 @@
 WEBSITE_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEV_ROOT="$(cd "$WEBSITE_ROOT/.." && pwd)"
 TRADING_RESEARCH_ROOT="$DEV_ROOT/trading-research"
-PAYROLL_ANOMALY_RANKING_ROOT="$DEV_ROOT/payroll-anomaly-ranking"
+SNF_PAYROLL_RANKER_ROOT="$DEV_ROOT/snf-payroll-ranker"
 
 # List source notebooks and their website-relative staging destinations.
 function staged_notebooks() {
@@ -9,7 +9,7 @@ function staged_notebooks() {
 $TRADING_RESEARCH_ROOT/notebooks/render-demo.ipynb|notebooks/render-demo.ipynb
 $TRADING_RESEARCH_ROOT/notebooks/pr_graph/eda_04_intraday_news_execution.ipynb|notebooks/pr_graph/eda_04_intraday_news_execution.ipynb
 $TRADING_RESEARCH_ROOT/notebooks/target_engineering/eda_01_target_engineering.ipynb|notebooks/target_engineering/eda_01_target_engineering.ipynb
-$PAYROLL_ANOMALY_RANKING_ROOT/notebooks/snf_payroll_ranker_report.ipynb|snf-payroll-ranker/snf_payroll_ranker_report.ipynb
+$SNF_PAYROLL_RANKER_ROOT/notebooks/snf_payroll_ranker_report.ipynb|snf-payroll-ranker/snf_payroll_ranker_report.ipynb
 EOF
 }
 
@@ -75,7 +75,7 @@ function validate_sources() {
 		return 1
 	fi
 
-	for path in "$TRADING_RESEARCH_ROOT" "$PAYROLL_ANOMALY_RANKING_ROOT"
+	for path in "$TRADING_RESEARCH_ROOT" "$SNF_PAYROLL_RANKER_ROOT"
 	do
 		if [ ! -d "$path" ]
 		then
@@ -107,7 +107,6 @@ function validate_sources() {
 # Copy selected notebooks into stable website paths.
 function stage_notebooks() {
 	rm -rf "$WEBSITE_ROOT/notebooks"
-	rm -f "$WEBSITE_ROOT/payroll-anomaly-ranking"/*.ipynb
 	rm -f "$WEBSITE_ROOT/snf-payroll-ranker"/*.ipynb
 
 	local src dest
