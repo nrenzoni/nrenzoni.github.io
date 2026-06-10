@@ -113,7 +113,7 @@ function stage_notebooks() {
 	while IFS='|' read -r src dest
 	do
 		mkdir -p "$(dirname "$WEBSITE_ROOT/$dest")"
-		cp "$src" "$WEBSITE_ROOT/$dest"
+		cp -p "$src" "$WEBSITE_ROOT/$dest"
 	done < <(staged_notebooks)
 }
 

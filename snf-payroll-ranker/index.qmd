@@ -6,7 +6,7 @@ listing:
   sort: "date desc"
   type: table
   categories: false
-  fields: [title, date, date-modified, categories]
+  fields: [title, date, categories]
   sort-ui: false
   filter-ui: false
   date-format: "medium"
