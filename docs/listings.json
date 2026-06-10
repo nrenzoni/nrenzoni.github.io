@@ -1,16 +1,15 @@
 [
   {
-    "listing": "/trading-research.html",
-    "items": [
-      "/notebooks/target_engineering/eda_01_target_engineering.html",
-      "/notebooks/pr_graph/eda_04_intraday_news_execution.html",
-      "/notebooks/render-demo.html"
-    ]
-  },
-  {
     "listing": "/snf-payroll-ranker/index.html",
     "items": [
       "/snf-payroll-ranker/snf_payroll_ranker_report.html"
+    ]
+  },
+  {
+    "listing": "/trading-research.html",
+    "items": [
+      "/notebooks/target_engineering/eda_01_target_engineering.html",
+      "/notebooks/pr_graph/eda_04_intraday_news_execution.html"
     ]
   }
 ]

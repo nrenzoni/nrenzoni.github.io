@@ -6,7 +6,6 @@ SNF_PAYROLL_RANKER_ROOT="$DEV_ROOT/snf-payroll-ranker"
 # List source notebooks and their website-relative staging destinations.
 function staged_notebooks() {
 	cat <<EOF
-$TRADING_RESEARCH_ROOT/notebooks/render-demo.ipynb|notebooks/render-demo.ipynb
 $TRADING_RESEARCH_ROOT/notebooks/pr_graph/eda_04_intraday_news_execution.ipynb|notebooks/pr_graph/eda_04_intraday_news_execution.ipynb
 $TRADING_RESEARCH_ROOT/notebooks/target_engineering/eda_01_target_engineering.ipynb|notebooks/target_engineering/eda_01_target_engineering.ipynb
 $SNF_PAYROLL_RANKER_ROOT/notebooks/snf_payroll_ranker_report.ipynb|snf-payroll-ranker/snf_payroll_ranker_report.ipynb
