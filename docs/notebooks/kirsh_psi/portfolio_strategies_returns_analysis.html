@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nathan Renzoni">
+<meta name="dcterms.date" content="2020-12-31">
+
+<title>Nathan’s Research - PSI vs.&nbsp;SPY: 20-Year Cumulative Return Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Nathan’s Research</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../trading-research.html"> 
+<span class="menu-text">Trading Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../snf-payroll-ranker/index.html"> 
+<span class="menu-text">SNF Payroll Ranker</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/nrenzoni"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/nathan-renzoni"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#psi-vs.-spy-20-year-cumulative-return-analysis-19992021" id="toc-psi-vs.-spy-20-year-cumulative-return-analysis-19992021" class="nav-link active" data-scroll-target="#psi-vs.-spy-20-year-cumulative-return-analysis-19992021">PSI vs.&nbsp;SPY: 20-Year Cumulative Return Analysis (1999–2021)</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#strategy-returns-kirsh-psi" id="toc-strategy-returns-kirsh-psi" class="nav-link" data-scroll-target="#strategy-returns-kirsh-psi">Strategy returns (Kirsh / PSI)</a></li>
+  <li><a href="#spy-benchmark" id="toc-spy-benchmark" class="nav-link" data-scroll-target="#spy-benchmark">SPY benchmark</a></li>
+  <li><a href="#per-year-and-full-period-comparison" id="toc-per-year-and-full-period-comparison" class="nav-link" data-scroll-target="#per-year-and-full-period-comparison">Per-year and full-period comparison</a></li>
+  <li><a href="#distribution-of-return-differences" id="toc-distribution-of-return-differences" class="nav-link" data-scroll-target="#distribution-of-return-differences">Distribution of return differences</a></li>
+  <li><a href="#bootstrap-methodology" id="toc-bootstrap-methodology" class="nav-link" data-scroll-target="#bootstrap-methodology">Bootstrap methodology</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">PSI vs.&nbsp;SPY: 20-Year Cumulative Return Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nathan Renzoni </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 31, 2020</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="psi-vs.-spy-20-year-cumulative-return-analysis-19992021" class="level2">
+<h2 class="anchored" data-anchor-id="psi-vs.-spy-20-year-cumulative-return-analysis-19992021">PSI vs.&nbsp;SPY: 20-Year Cumulative Return Analysis (1999–2021)</h2>
+<p>This notebook compares the monthly returns of the <strong>PSI (Kirshenbaum) strategy</strong> against an <strong>SPY buy-and-hold benchmark</strong> over roughly twenty years. Using bootstrap (with and without replacement) and permutation of the return-difference series, it characterizes the distribution of 20-year cumulative returns and assesses whether PSI’s outperformance is structurally robust or merely timing-dependent.</p>
+<blockquote class="blockquote">
+<p><strong>Data note.</strong> The Kirsh monthly returns (1999-12-31 → 2021-12-31, 259 months) were pre-computed in a separate notebook and are loaded from a pickle. SPY daily closes are loaded from a materialized parquet (sourced from the <code>daily_ohlc</code> Postgres table); that table currently ends 2021-07-09, so the joined analysis covers <strong>1999-12 to 2021-07 (254 months)</strong>.</p>
+</blockquote>
+<section id="setup" class="level3">
+<h3 class="anchored" data-anchor-id="setup">Setup</h3>
+<div id="393b5d51" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:41.596189Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:41.595929Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:43.820450Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:43.819282Z&quot;}" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> trading_research.research_setup <span class="im">import</span> <span class="op">*</span>  <span class="co"># pd, np, plt, AnalysisCore, Path, ...</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"figure.figsize"</span>] <span class="op">=</span> [<span class="dv">15</span>, <span class="dv">5</span>]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.dpi'</span>] <span class="op">=</span> <span class="dv">110</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'savefig.dpi'</span>] <span class="op">=</span> <span class="dv">150</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>sns.set_theme()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>importing stock_data_dealer
+importing stock_data_dealer.db
+importing stock_data_dealer.models
+importing stock_data_dealer.utils
+importing stock_data_dealer.enums
+importing stock_data_dealer.models_utils
+importing stock_data_dealer.premarket
+importing stock_data_dealer.controllers
+importing stock_data_dealer.parsers
+importing stock_data_dealer.iqfeed_io
+loading .env from /home/trade/Dev/trading-research/.env</code></pre>
+</div>
+</div>
+</section>
+<section id="strategy-returns-kirsh-psi" class="level3">
+<h3 class="anchored" data-anchor-id="strategy-returns-kirsh-psi">Strategy returns (Kirsh / PSI)</h3>
+<div id="04b413e0" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:43.823173Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:43.822886Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:43.828638Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:43.827863Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data pre-processed in a different notebook (monthly PSI/Kirsh strategy returns)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>kirsh_ret_df <span class="op">=</span> pd.read_pickle(<span class="st">'kirsh_ret_df_1999_to_2021.pkl'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="44f9cbbc" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:43.831013Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:43.830864Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:43.841472Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:43.840623Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>kirsh_ret_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">start_date</th>
+<th data-quarto-table-cell-role="th">end_date</th>
+<th data-quarto-table-cell-role="th">period_ret</th>
+<th data-quarto-table-cell-role="th">cum_ret</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1999-12-31</td>
+<td>2000-01-31</td>
+<td>-0.0146</td>
+<td>-0.0146</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2000-01-31</td>
+<td>2000-02-29</td>
+<td>0.1225</td>
+<td>0.1062</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2000-02-29</td>
+<td>2000-03-31</td>
+<td>-0.0041</td>
+<td>0.1016</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2000-03-31</td>
+<td>2000-04-30</td>
+<td>-0.0534</td>
+<td>0.0428</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2000-04-30</td>
+<td>2000-05-31</td>
+<td>-0.0507</td>
+<td>-0.0101</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">254</td>
+<td>2021-07-31</td>
+<td>2021-08-31</td>
+<td>0.0267</td>
+<td>2.7830</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">255</td>
+<td>2021-08-31</td>
+<td>2021-09-30</td>
+<td>-0.0482</td>
+<td>2.6005</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">256</td>
+<td>2021-09-30</td>
+<td>2021-10-31</td>
+<td>0.0767</td>
+<td>2.8766</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">257</td>
+<td>2021-10-31</td>
+<td>2021-11-30</td>
+<td>0.0091</td>
+<td>2.9118</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">258</td>
+<td>2021-11-30</td>
+<td>2021-12-31</td>
+<td>-0.0046</td>
+<td>2.8938</td>
+</tr>
+</tbody>
+</table>
+
+<p>259 rows × 4 columns</p>
+</div>
+</div>
+</div>
+</div>
+<p>Cumulative growth of $1 in the PSI strategy, indexed by period start date.</p>
+<div id="789d3743" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:43.843813Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:43.843654Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.027360Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.026305Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>kirsh_ret_df.set_index(<span class="st">'start_date'</span>, drop<span class="op">=</span><span class="va">False</span>).period_ret.add(<span class="dv">1</span>).cumprod().plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cf197ca8" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.029678Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.029515Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.032823Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.032024Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>kirsh_start_date <span class="op">=</span> kirsh_ret_df.start_date[<span class="dv">0</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>kirsh_end_date <span class="op">=</span> kirsh_ret_df.end_date.iloc[<span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="spy-benchmark" class="level3">
+<h3 class="anchored" data-anchor-id="spy-benchmark">SPY benchmark</h3>
+<div id="45a6f387" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.035776Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.035625Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.072577Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.071604Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SPY daily closes materialized from the daily_ohlc Postgres table</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (self-contained so the notebook renders without a live DB at build time).</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: SPY data in Postgres ends 2021-07-09; analysis covers 1999-12 to 2021-07.</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>spy_ret <span class="op">=</span> pl.read_parquet(<span class="st">'spy_daily_close_1999_to_2021.parquet'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="87c070b6" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.074554Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.074386Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.079086Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.078331Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>spy_daily_ret_df <span class="op">=</span> spy_ret.to_pandas()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="db94cc7b" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.080870Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.080675Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.090356Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.089518Z&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>spy_monthly_ret <span class="op">=</span> spy_daily_ret_df.set_index(<span class="st">'date'</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>spy_monthly_ret.index <span class="op">=</span> pd.DatetimeIndex(spy_monthly_ret.index)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>spy_monthly_ret <span class="op">=</span> spy_monthly_ret.pct_change().add(<span class="dv">1</span>).resample(<span class="st">'ME'</span>).prod().sub(<span class="dv">1</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>spy_monthly_ret.columns <span class="op">=</span> [<span class="st">'spy_month_ret'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>PSY monthly returns by <code>end_date</code> (Kirsh), for visual comparison with SPY below.</p>
+<div id="dd461d76" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.092251Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.092090Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.242129Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.240885Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>kirsh_ret_df.set_index(<span class="st">'end_date'</span>).period_ret.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="728721fe" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.244475Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.244313Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.251950Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.250597Z&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>spy_monthly_ret</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">spy_month_ret</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1999-12-31</td>
+<td>0.044402</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2000-01-31</td>
+<td>-0.048268</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2000-02-29</td>
+<td>-0.015226</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2000-03-31</td>
+<td>0.094134</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2000-04-30</td>
+<td>-0.035120</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-03-31</td>
+<td>0.037780</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-04-30</td>
+<td>0.064170</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-05-31</td>
+<td>-0.000048</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-06-30</td>
+<td>0.018236</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-07-31</td>
+<td>0.007529</td>
+</tr>
+</tbody>
+</table>
+
+<p>260 rows × 1 columns</p>
+</div>
+</div>
+</div>
+</div>
+<p>Join Kirsh and SPY monthly returns on <code>end_date</code>.</p>
+<div id="b0e42ed8" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.254079Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.253882Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.261288Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.260259Z&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>both_ret_df <span class="op">=</span> kirsh_ret_df.set_index(<span class="st">'end_date'</span>).join(spy_monthly_ret)[[<span class="st">'period_ret'</span>, <span class="st">'spy_month_ret'</span>]].dropna()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>both_ret_df.columns <span class="op">=</span> [<span class="st">'kirsh'</span>, <span class="st">'spy'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="8fa1dd54" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.264143Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.263823Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.272288Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.271199Z&quot;}" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>both_ret_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">kirsh</th>
+<th data-quarto-table-cell-role="th">spy</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">end_date</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2000-01-31</td>
+<td>-0.0146</td>
+<td>-0.048268</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2000-02-29</td>
+<td>0.1225</td>
+<td>-0.015226</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2000-03-31</td>
+<td>-0.0041</td>
+<td>0.094134</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2000-04-30</td>
+<td>-0.0534</td>
+<td>-0.035120</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2000-05-31</td>
+<td>-0.0507</td>
+<td>-0.015723</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-03-31</td>
+<td>-0.0381</td>
+<td>0.037780</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-04-30</td>
+<td>0.0134</td>
+<td>0.064170</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-05-31</td>
+<td>-0.0155</td>
+<td>-0.000048</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-06-30</td>
+<td>0.0363</td>
+<td>0.018236</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-07-31</td>
+<td>0.0080</td>
+<td>0.007529</td>
+</tr>
+</tbody>
+</table>
+
+<p>254 rows × 2 columns</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="per-year-and-full-period-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="per-year-and-full-period-comparison">Per-year and full-period comparison</h3>
+<div id="ae84e1d3" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.274497Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.274334Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.278182Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.277204Z&quot;}" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_return_series_for_year(year):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    both_ret_df[<span class="bu">str</span>(year):<span class="bu">str</span>(year<span class="op">+</span><span class="dv">1</span>)].add(<span class="dv">1</span>).cumprod().plot()</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_return_series_for_year(year):</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> both_ret_df[<span class="bu">str</span>(year):<span class="bu">str</span>(year<span class="op">+</span><span class="dv">1</span>)].add(<span class="dv">1</span>).cumprod().iloc[<span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Year-end cumulative returns, Kirsh vs SPY, 2000→2021.</p>
+<div id="7a05ba20" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.281359Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.281177Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.306142Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.305130Z&quot;}" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame([get_return_series_for_year(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2000</span>, <span class="dv">2021</span><span class="op">+</span><span class="dv">1</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">kirsh</th>
+<th data-quarto-table-cell-role="th">spy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2001-12-31</td>
+<td>0.792421</td>
+<td>0.779457</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2002-12-31</td>
+<td>0.767013</td>
+<td>0.652758</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2003-12-31</td>
+<td>1.168968</td>
+<td>0.944929</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2004-12-31</td>
+<td>1.493830</td>
+<td>1.369942</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2005-12-31</td>
+<td>1.267183</td>
+<td>1.083959</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2006-12-31</td>
+<td>1.252619</td>
+<td>1.135094</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2007-12-31</td>
+<td>1.208238</td>
+<td>1.174283</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2008-12-31</td>
+<td>0.831973</td>
+<td>0.642976</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2009-12-31</td>
+<td>0.920595</td>
+<td>0.769102</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2010-12-31</td>
+<td>1.320851</td>
+<td>1.393506</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2011-12-31</td>
+<td>1.234736</td>
+<td>1.216439</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2012-12-31</td>
+<td>1.169433</td>
+<td>1.169050</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-12-31</td>
+<td>1.322676</td>
+<td>1.406412</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2014-12-31</td>
+<td>1.281079</td>
+<td>1.443298</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2015-12-31</td>
+<td>1.088007</td>
+<td>1.103850</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2016-12-31</td>
+<td>1.121992</td>
+<td>1.087526</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2017-12-31</td>
+<td>1.288206</td>
+<td>1.308971</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2018-12-31</td>
+<td>1.122683</td>
+<td>1.118060</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2019-12-31</td>
+<td>1.193977</td>
+<td>1.206101</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2020-12-31</td>
+<td>1.908913</td>
+<td>1.488436</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-07-31</td>
+<td>1.619610</td>
+<td>1.338843</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-07-31</td>
+<td>1.079383</td>
+<td>1.158418</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<p>Full-period cumulative growth of $1: Kirsh vs SPY.</p>
+<div id="1c34c922" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.308605Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.308436Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.466054Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.465052Z&quot;}" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>both_ret_df.add(<span class="dv">1</span>).cumprod().plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="aefa4d49" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.469301Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.469003Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.476081Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.474997Z&quot;}" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>both_ret_df[<span class="st">'2020'</span>:].add(<span class="dv">1</span>).cumprod().sub(<span class="dv">1</span>).iloc[<span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>kirsh    0.619610
+spy      0.338843
+Name: 2021-07-31 00:00:00, dtype: float64</code></pre>
+</div>
+</div>
+<p>Kirsh minus SPY monthly return difference. Positive = PSI outperformed SPY that month.</p>
+<div id="32900022" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.478500Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.478347Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.619557Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.618526Z&quot;}" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ret_diff_series <span class="op">=</span> both_ret_df[<span class="st">'kirsh'</span>] <span class="op">-</span> both_ret_df[<span class="st">'spy'</span>]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ret_diff_series.plot()</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>6-month rolling median of the return difference — smooths month-to-month noise.</p>
+<div id="27546232" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.622801Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.622635Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:44.766671Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:44.765490Z&quot;}" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ret_diff_series.rolling(<span class="dv">6</span>).median().plot()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="distribution-of-return-differences" class="level3">
+<h3 class="anchored" data-anchor-id="distribution-of-return-differences">Distribution of return differences</h3>
+<p>Density of Kirsh monthly returns.</p>
+<div id="85ad18e8" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:44.769895Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:44.769553Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:45.008989Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:45.007929Z&quot;}" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(both_ret_df[<span class="st">'kirsh'</span>])<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Histogram of (Kirsh − SPY) monthly return differences.</p>
+<div id="65fc6365" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:45.011783Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:45.011598Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:45.209628Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:45.208549Z&quot;}" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ret_diff_series.plot.hist(bins<span class="op">=</span><span class="dv">100</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="b8eb2c8a" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:45.212471Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:45.212276Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:45.218263Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:45.217191Z&quot;}" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ret_diff_series.values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>array([ 3.36683513e-02,  1.37726153e-01, -9.82336971e-02, -1.82798005e-02,
+       -3.49770677e-02,  7.21129978e-02, -1.03973597e-02,  3.72587413e-02,
+        4.53107865e-03, -3.83218451e-02, -5.89475441e-02,  4.43687424e-02,
+       -2.34592663e-02, -1.41124653e-02, -1.14279952e-02,  1.25694575e-03,
+       -9.25994716e-04,  2.08978563e-02, -1.21042414e-02,  2.12325093e-02,
+       -1.21364871e-02,  6.57816928e-03, -3.09773157e-02,  1.99079790e-02,
+        4.29877515e-03,  6.02360311e-02,  5.13557806e-02,  7.41500093e-03,
+        3.43481856e-02,  1.69197251e-02, -3.80122861e-03,  5.53472434e-02,
+       -6.74838978e-02, -2.18809761e-02,  4.46832305e-02,  1.38948090e-02,
+       -3.02103184e-03,  5.58457008e-03, -4.52117536e-02, -8.63625286e-03,
+        9.48607530e-03,  7.37275428e-03,  1.19741825e-02,  1.48884858e-02,
+        4.37323662e-03,  1.52788224e-02, -1.27734147e-02,  9.33005032e-03,
+        1.39293268e-02,  2.69927491e-02, -1.79786914e-02, -1.18232877e-02,
+        9.02906256e-04,  2.04186327e-02,  2.66405630e-03,  1.45499415e-02,
+        1.81524696e-03,  6.96890459e-03,  3.82219866e-03,  5.12078266e-03,
+       -1.90385917e-03,  1.07337976e-02,  4.36351645e-02,  3.29108805e-02,
+       -6.76145326e-03,  1.27449491e-03, -9.52651330e-04,  4.45084525e-03,
+       -2.01523849e-02,  1.64764612e-02,  1.50858646e-02, -2.72549020e-03,
+        1.64224207e-02, -1.31903258e-04,  2.09401384e-05, -4.00409380e-03,
+       -1.09730645e-02, -9.82244818e-03, -8.40459277e-03, -2.31669412e-03,
+        1.34146672e-02,  7.24364904e-03,  6.25975145e-03,  1.97173913e-02,
+       -6.92421770e-04, -1.62957746e-02, -1.82002158e-03,  1.05494652e-02,
+        1.10243967e-04, -1.74328301e-02, -3.20987872e-03,  9.93334644e-03,
+       -1.16737795e-03,  8.68055967e-03,  1.56609808e-02,  2.00426148e-02,
+        6.32454043e-03, -1.82623475e-02,  5.78355273e-03,  6.70368009e-02,
+       -6.65375700e-03,  2.94865983e-02,  4.98866540e-02,  3.85065269e-02,
+        1.57349983e-02,  6.13143617e-02,  7.77489919e-02, -5.09120655e-02,
+       -4.70460765e-02, -1.78534431e-02, -6.73176267e-03, -4.41057640e-02,
+       -2.66395810e-02, -3.34850673e-03,  1.63253054e-02, -4.58067980e-02,
+        4.35619429e-03,  2.87424264e-02, -2.34947109e-02, -1.77288062e-02,
+        4.50854701e-03,  3.78823777e-02,  3.92225128e-02, -2.81007169e-02,
+        2.99805024e-02, -3.17527300e-02, -1.63020503e-02, -2.82109883e-03,
+       -2.30486022e-02, -2.19001988e-02, -1.57373329e-02,  8.20578295e-03,
+       -1.39614601e-02,  3.81454226e-03,  5.20197924e-02,  4.80454649e-03,
+        1.10756437e-02, -5.76471498e-02,  6.06374502e-03,  2.40196736e-02,
+       -1.24054219e-02, -1.02601956e-02,  4.47566224e-03,  6.75576607e-03,
+       -8.25519130e-03, -7.89236619e-03, -7.45264687e-03,  4.93510910e-04,
+        1.47982357e-02,  3.70491687e-03,  8.60618339e-03, -1.18902254e-02,
+       -4.35885104e-03, -4.67510718e-03, -2.71235718e-03, -7.47840681e-03,
+        9.90775490e-03, -1.83768483e-02,  1.33922945e-02,  1.95777574e-03,
+       -2.16067675e-02, -1.27376358e-02, -8.67403315e-05,  9.94825383e-03,
+       -1.68157706e-02, -2.86494176e-03, -1.11514999e-02, -9.30641495e-03,
+       -2.07745485e-03,  5.37563867e-04, -2.05634626e-02,  4.18473419e-03,
+       -1.14509085e-02, -1.23719825e-02,  6.01158301e-03,  1.28292692e-02,
+        3.74954375e-02,  1.13797494e-02, -5.83384198e-03,  6.43816560e-04,
+        1.23544662e-02, -1.00892640e-02,  1.50501188e-02, -3.14402287e-03,
+       -2.71597506e-02,  1.84492377e-03,  2.89645886e-03, -1.02172953e-02,
+       -1.66993942e-03, -3.68962596e-03,  1.55488517e-03, -7.20764016e-03,
+       -4.96057949e-03, -9.96001910e-04,  3.60250553e-03,  7.16825835e-03,
+        5.43703190e-03, -7.53839097e-03,  5.06506943e-04, -2.49468975e-03,
+       -1.17915220e-02,  7.58707236e-03, -3.26189870e-04,  1.18709677e-03,
+        4.00894632e-03, -3.54177006e-04,  2.08230336e-03,  7.58827831e-03,
+       -1.76406480e-03, -4.96581762e-03,  8.19131354e-04, -3.55913962e-03,
+        7.60411493e-04,  1.61902632e-02, -5.76815504e-03, -1.80909984e-03,
+        3.34510962e-03, -1.05465939e-02, -1.11980948e-03, -4.91228342e-03,
+       -7.89570721e-03,  6.75068913e-03,  9.54300744e-03,  2.03437900e-03,
+        8.28418849e-03,  3.96428879e-03,  1.34755027e-03,  8.77117203e-03,
+       -9.70948887e-03,  1.78054608e-03,  8.94343543e-03, -1.33717559e-02,
+       -8.80466017e-03, -1.34982000e-02, -3.32087111e-03,  1.44039023e-02,
+        1.53657601e-02, -1.06580031e-02,  1.24200000e-01,  8.18000000e-02,
+        5.66000000e-02, -1.51875651e-01, -2.87063835e-03,  2.56424953e-02,
+        7.94069260e-03,  4.05926441e-02,  5.71221162e-02,  7.00614291e-02,
+       -1.67055503e-02, -7.58799979e-02, -5.07704456e-02, -1.54523878e-02,
+        1.80636416e-02,  4.71358429e-04])</code></pre>
+</div>
+</div>
+<p>Random SPY sample (12 × 20 months) cumulative product — a random-walk sanity check.</p>
+<div id="c663c781" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:45.220534Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:45.220377Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:45.326414Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:45.325295Z&quot;}" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pd.Series(np.random.choice(both_ret_df[<span class="st">'spy'</span>], <span class="dv">12</span><span class="op">*</span><span class="dv">20</span>)).add(<span class="dv">1</span>).cumprod().plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bootstrap-methodology" class="level3">
+<h3 class="anchored" data-anchor-id="bootstrap-methodology">Bootstrap methodology</h3>
+<p>Permutation / sampling helpers used to build the bootstrap ensembles below.</p>
+<div id="d2727dff" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:45.330518Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:45.330156Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:45.335238Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:45.334189Z&quot;}" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> permute_columns(x):</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    ix_i <span class="op">=</span> np.random.sample(x.shape).argsort(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    ix_j <span class="op">=</span> np.arange(x.shape[<span class="dv">1</span>])</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x[ix_i, ix_j]</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> permute_rows(x):</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    ix_i <span class="op">=</span> np.arange(x.shape[<span class="dv">0</span>]).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    ix_j <span class="op">=</span> np.random.sample(x.shape).argsort(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x[ix_i, ix_j]</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> choose_rand_rows(x):</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    ix_i <span class="op">=</span> np.arange(x.shape[<span class="dv">0</span>]).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    ix_j <span class="op">=</span> np.random.randint(<span class="dv">0</span>, x.shape[<span class="dv">1</span>], size<span class="op">=</span>x.shape)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x[ix_i, ix_j]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Build the ensembles: - <strong>No replacement</strong>: permute the order of the (Kirsh − SPY) difference series, re-add it to SPY, and compound — tests whether PSI’s <em>timing</em> matters. - <strong>With replacement</strong>: resample Kirsh and SPY monthly returns independently (1000 draws each) and compound — characterizes the distribution of 20-year outcomes under each strategy.</p>
+<div id="866eb1da" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:45.337656Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:45.337461Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:45.349516Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:45.348496Z&quot;}" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>permuted_ret_diff_series_arr <span class="op">=</span> permute_rows(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    np.tile(ret_diff_series, (<span class="dv">100</span>,<span class="dv">1</span>))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>kirsh_rand_choice_series_arr <span class="op">=</span> choose_rand_rows(</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    np.tile(both_ret_df[<span class="st">'kirsh'</span>], (<span class="dv">1_000</span>,<span class="dv">1</span>))</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>spy_rand_choice_series_arr <span class="op">=</span> choose_rand_rows(</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    np.tile(both_ret_df[<span class="st">'spy'</span>], (<span class="dv">1_000</span>, <span class="dv">1</span>))</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="69c7236e" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:45.352775Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:45.352542Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:45.356742Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:45.355744Z&quot;}" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>kirsh_ret_bootstrap_no_replacement_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    (permuted_ret_diff_series_arr <span class="op">+</span> both_ret_df[<span class="st">'spy'</span>].values <span class="op">+</span> <span class="dv">1</span>).cumprod(<span class="dv">1</span>).T,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>both_ret_df.index)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="5097073e" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:45.359226Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:45.359057Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:45.368231Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:45.367049Z&quot;}" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>kirsh_ret_bootstrap_replacement_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    (kirsh_rand_choice_series_arr <span class="op">+</span> <span class="dv">1</span>).cumprod(<span class="dv">1</span>).T,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>both_ret_df.index)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>spy_ret_bootstrap_replacement_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    (spy_rand_choice_series_arr <span class="op">+</span> <span class="dv">1</span>).cumprod(<span class="dv">1</span>).T,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>both_ret_df.index</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e1ac1383" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:45.372297Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:45.372029Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:45.376096Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:45.375208Z&quot;}" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>spy_final_ret <span class="op">=</span> both_ret_df[<span class="st">'spy'</span>].add(<span class="dv">1</span>).cumprod().iloc[<span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="results" class="level3">
+<h3 class="anchored" data-anchor-id="results">Results</h3>
+<p>Bootstrap (no-replacement) equity curves vs the actual SPY buy-and-hold (dashed). Tests timing sensitivity.</p>
+<div id="b3a90183" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:45.379566Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:45.379344Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:45.844532Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:45.843523Z&quot;}" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>kirsh_ret_bootstrap_no_replacement_df.plot(ax<span class="op">=</span>ax)<span class="op">;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>both_ret_df[<span class="st">'spy'</span>].add(<span class="dv">1</span>).cumprod().plot(style<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">5</span>, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>ax.legend().remove()</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>ax.title.set_text(<span class="st">'PSI vs. SPY Equity Curve</span><span class="ch">\n</span><span class="st">(No Replacement)'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-29-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Density of no-replacement final returns; red line = actual SPY 20-year final return.</p>
+<div id="b6be2067" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:45.848313Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:45.848137Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:46.072265Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:46.071276Z&quot;}" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(kirsh_ret_bootstrap_no_replacement_df.iloc[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>plt.axvline(spy_final_ret)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-30-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Bootstrap (with-replacement) equity curves vs actual SPY (dashed).</p>
+<div id="6b40a12f" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:46.075336Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:46.075152Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:47.866531Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:47.865624Z&quot;}" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>kirsh_ret_bootstrap_replacement_df.plot(legend<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>both_ret_df[<span class="st">'spy'</span>].add(<span class="dv">1</span>).cumprod().plot(style<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'PSI vs. SPY Equity Curve</span><span class="ch">\n</span><span class="st">(With Replacement)'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-31-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Density of SPY with-replacement final returns (clipped 0–10).</p>
+<div id="e6c80aa7" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:47.870336Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:47.870166Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:48.054251Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:48.053323Z&quot;}" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    spy_ret_bootstrap_replacement_df.iloc[<span class="op">-</span><span class="dv">1</span>]<span class="op">\</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>        .clip(<span class="dv">0</span>, <span class="dv">10</span>),</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     bw_adjust=1.9,</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">'SPY with replacement'</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-32-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="7c235de8" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:48.056376Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:48.056215Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:48.061056Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:48.060336Z&quot;}" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>spy_ret_bootstrap_replacement_df.iloc[<span class="op">-</span><span class="dv">1</span>].median(), kirsh_ret_bootstrap_replacement_df.iloc[<span class="op">-</span><span class="dv">1</span>].median()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<pre><code>(np.float64(2.9539108947013006), np.float64(5.721996800838706))</code></pre>
+</div>
+</div>
+<p>Dual density: Kirsh vs SPY with-replacement 20-year final returns. Red line = actual SPY.</p>
+<div id="7f69455f" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:48.063492Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:48.063332Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:48.337227Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:48.336307Z&quot;}" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    kirsh_ret_bootstrap_replacement_df.iloc[<span class="op">-</span><span class="dv">1</span>]<span class="op">\</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>        .rename(),</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">'PSI with replacement'</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    spy_ret_bootstrap_replacement_df.iloc[<span class="op">-</span><span class="dv">1</span>]<span class="op">\</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>        .rename(),</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     bw_adjust=1.9,</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">'SPY with replacement'</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="op">-</span><span class="dv">2</span>,<span class="dv">10</span>)</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>plt.axvline(both_ret_df[<span class="st">'spy'</span>].add(<span class="dv">1</span>).cumprod().iloc[<span class="op">-</span><span class="dv">1</span>], color<span class="op">=</span><span class="st">'r'</span>, label<span class="op">=</span><span class="st">'SPY (2000-2020)'</span>)</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'20 year cumulative returns</span><span class="ch">\n</span><span class="st">density plot'</span>)</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'20 year final return'</span>)</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>plt.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-34-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A single permutation of the difference series re-added to SPY — what a randomized PSI timing sequence looks like.</p>
+<div id="3a9e55c3" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:48.339703Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:48.339533Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:48.476246Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:48.475367Z&quot;}" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>(pd.Series(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    np.random.permutation(ret_diff_series.values),</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>ret_diff_series.index) <span class="op">+</span> both_ret_df[<span class="st">'spy'</span>]).add(<span class="dv">1</span>).cumprod().plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-35-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The actual (Kirsh − SPY) + SPY sequence compounded — PSI’s real timing.</p>
+<div id="7e6740fc" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-06-19T00:09:48.478754Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-06-19T00:09:48.478440Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-06-19T00:09:48.608522Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-06-19T00:09:48.607707Z&quot;}" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>(ret_diff_series <span class="op">+</span> both_ret_df[<span class="st">'spy'</span>]).add(<span class="dv">1</span>).cumprod().plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="portfolio_strategies_returns_analysis_files/figure-html/cell-36-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
