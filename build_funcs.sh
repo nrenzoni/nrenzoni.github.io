@@ -8,6 +8,7 @@ function staged_notebooks() {
 	cat <<EOF
 $TRADING_RESEARCH_ROOT/notebooks/pr_graph/eda_04_intraday_news_execution.ipynb|notebooks/pr_graph/eda_04_intraday_news_execution.ipynb
 $TRADING_RESEARCH_ROOT/notebooks/target_engineering/eda_01_target_engineering.ipynb|notebooks/target_engineering/eda_01_target_engineering.ipynb
+$TRADING_RESEARCH_ROOT/notebooks/kirsh_psi/portfolio_strategies_returns_analysis.ipynb|notebooks/kirsh_psi/portfolio_strategies_returns_analysis.ipynb
 $SNF_PAYROLL_RANKER_ROOT/notebooks/snf_payroll_ranker_report.ipynb|snf-payroll-ranker/snf_payroll_ranker_report.ipynb
 EOF
 }

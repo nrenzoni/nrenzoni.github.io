@@ -4,6 +4,7 @@ listing:
   contents:
     - "notebooks/target_engineering/eda_01_target_engineering.ipynb"
     - "notebooks/pr_graph/eda_04_intraday_news_execution.ipynb"
+    - "notebooks/kirsh_psi/portfolio_strategies_returns_analysis.ipynb"
   sort: "date desc"
   type: table
   categories: false

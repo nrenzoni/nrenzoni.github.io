@@ -6,6 +6,7 @@ project:
     - "snf-payroll-ranker/index.qmd"
     - "notebooks/pr_graph/eda_04_intraday_news_execution.ipynb"
     - "notebooks/target_engineering/eda_01_target_engineering.ipynb"
+    - "notebooks/kirsh_psi/portfolio_strategies_returns_analysis.ipynb"
     - "snf-payroll-ranker/snf_payroll_ranker_report.ipynb"
 
 website:
